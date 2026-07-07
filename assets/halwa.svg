@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" role="img" aria-label="Tirunelveli Halwa">
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#FFF5DF"/>
+      <stop offset="1" stop-color="#F6B7A4"/>
+    </linearGradient>
+    <linearGradient id="halwa" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#B44A34"/>
+      <stop offset=".55" stop-color="#7E2F25"/>
+      <stop offset="1" stop-color="#4B1D18"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="18" stdDeviation="14" flood-color="#4B1D18" flood-opacity=".25"/>
+    </filter>
+  </defs>
+  <rect width="800" height="600" fill="url(#bg)"/>
+  <ellipse cx="400" cy="440" rx="304" ry="76" fill="#4B1D18" opacity=".14"/>
+  <path d="M190 288c60-84 230-126 354-72 88 38 126 122 72 184-76 88-298 94-410 18-56-38-64-86-16-130z" fill="url(#halwa)" filter="url(#shadow)"/>
+  <path d="M228 288c88 46 206 54 352 10" fill="none" stroke="#D77C4A" stroke-width="20" stroke-linecap="round" opacity=".5"/>
+  <path d="M264 372c94 38 210 38 312-2" fill="none" stroke="#2B120F" stroke-width="16" stroke-linecap="round" opacity=".28"/>
+  <g fill="#FFD700">
+    <ellipse cx="308" cy="284" rx="20" ry="7" transform="rotate(-20 308 284)"/>
+    <ellipse cx="442" cy="248" rx="20" ry="7" transform="rotate(12 442 248)"/>
+    <ellipse cx="516" cy="344" rx="20" ry="7" transform="rotate(-6 516 344)"/>
+  </g>
+</svg>

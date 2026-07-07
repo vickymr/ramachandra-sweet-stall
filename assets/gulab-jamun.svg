@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" role="img" aria-label="Gulab Jamun">
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#FFFDF7"/>
+      <stop offset="1" stop-color="#FFD5A1"/>
+    </linearGradient>
+    <radialGradient id="jamun" cx=".35" cy=".25" r=".74">
+      <stop offset="0" stop-color="#A9552E"/>
+      <stop offset=".6" stop-color="#6B2E1F"/>
+      <stop offset="1" stop-color="#2D130F"/>
+    </radialGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="18" stdDeviation="14" flood-color="#4A1B12" flood-opacity=".28"/>
+    </filter>
+  </defs>
+  <rect width="800" height="600" fill="url(#bg)"/>
+  <ellipse cx="400" cy="438" rx="304" ry="76" fill="#4A1B12" opacity=".14"/>
+  <ellipse cx="400" cy="360" rx="286" ry="112" fill="#FFD16D" opacity=".56"/>
+  <g filter="url(#shadow)">
+    <circle cx="286" cy="300" r="96" fill="url(#jamun)"/>
+    <circle cx="416" cy="260" r="102" fill="url(#jamun)"/>
+    <circle cx="530" cy="336" r="98" fill="url(#jamun)"/>
+  </g>
+  <g fill="#FFE19A" opacity=".8">
+    <ellipse cx="252" cy="266" rx="26" ry="10" transform="rotate(-24 252 266)"/>
+    <ellipse cx="388" cy="224" rx="28" ry="10" transform="rotate(-18 388 224)"/>
+    <ellipse cx="498" cy="300" rx="28" ry="10" transform="rotate(-18 498 300)"/>
+  </g>
+</svg>

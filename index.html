@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Sri Ramachandra Sweets & Bakery serves traditional Indian sweets made fresh with premium ingredients and heritage recipes.">
+  <title>Sri Ramachandra Sweets & Bakery</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Tamil:wght@400;500;600;700&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div id="lantern-glow" class="lantern-glow" aria-hidden="true"></div>
+  <div class="ambient-background" aria-hidden="true"></div>
+
+  <header class="site-header">
+    <nav class="navbar" aria-label="Primary navigation" data-i18n-aria-label="nav.aria">
+      <a class="brand" href="#" aria-label="Sri Ramachandra Sweets & Bakery homepage">
+        <img class="brand-logo" src="assets/logo.png" alt="Sri Ramachandra Sweets & Bakery Logo">
+        <div class="brand-text">
+          <span class="brand-name" data-i18n="brand.name">Sri Ramachandra Sweets & Bakery</span>
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <span class="brand-subtext" data-i18n="brand.since">Since 1984</span>
+            <span class="live-status-badge" id="liveStatusBadge"></span>
+          </div>
+        </div>
+      </a>
+
+      <div class="header-actions">
+        <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle Theme" style="margin-right: 8px;">
+          <i class="fa-solid fa-moon" aria-hidden="true"></i>
+        </button>
+        <button class="cart-toggle" id="cartToggle" type="button" aria-label="Open basket" data-i18n-aria-label="cart.open">
+          <i class="fa-solid fa-shopping-basket" aria-hidden="true"></i>
+          <span class="cart-badge" id="cartBadge" hidden>0</span>
+        </button>
+        <button class="menu-toggle" id="menuToggle" type="button" aria-controls="primaryMenu" aria-expanded="false" data-i18n-aria-label="nav.openMenu">
+          <i class="fa-solid fa-bars" aria-hidden="true"></i>
+        </button>
+      </div>
+
+      <div class="nav-panel" id="primaryMenu">
+        <ul class="nav-links">
+          <li><a href="#home" data-i18n="nav.home">Home</a></li>
+          <li><a href="#savouries" data-i18n="nav.savouries">Savouries</a></li>
+          <li><a href="#sweets" data-i18n="nav.sweets">Sweets</a></li>
+          <li><a href="#about" data-i18n="nav.about">About</a></li>
+          <li><a href="#contact" data-i18n="nav.contact">Contact</a></li>
+        </ul>
+        <button class="language-toggle" id="languageToggle" type="button" data-i18n-aria-label="language.switchToTamil">தமிழ்</button>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero" id="home">
+      <img class="hero-image" src="assets/hero-sweets.svg" alt="" aria-hidden="true">
+      <div class="hero-overlay" aria-hidden="true"></div>
+      <div class="ambient-glow glow-1" aria-hidden="true"></div>
+      <div class="ambient-glow glow-2" aria-hidden="true"></div>
+      <div class="hero-content">
+        <p class="eyebrow hero-animate" data-i18n="hero.eyebrow">Freshly made every morning</p>
+        <h1 class="hero-animate" data-i18n="hero.title">Sri Ramachandra Sweets & Bakery</h1>
+        <p class="hero-copy hero-animate" data-i18n="hero.subtitle">Golden ghee, time-honored recipes, and sweets that make every celebration warmer.</p>
+        <div class="hero-actions hero-animate">
+          <a class="btn btn-primary" href="#sweets">
+            <span data-i18n="hero.sweetsCta">Explore Sweets</span>
+            <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+          </a>
+          <a class="btn btn-secondary" href="#savouries">
+            <span data-i18n="hero.savouriesCta">Explore Savouries</span>
+            <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+          </a>
+        </div>
+        <div class="hero-highlights hero-animate" aria-label="Shop highlights" data-i18n-aria-label="hero.highlightsAria">
+          <span><i class="fa-solid fa-fire-burner" aria-hidden="true"></i><span data-i18n="hero.highlightFresh">Small-batch cooking</span></span>
+          <span><i class="fa-solid fa-award" aria-hidden="true"></i><span data-i18n="hero.highlightGhee">Pure ghee sweets</span></span>
+          <span><i class="fa-solid fa-gift" aria-hidden="true"></i><span data-i18n="hero.highlightGift">Festival gift boxes</span></span>
+        </div>
+      </div>
+    </section>
+
+    <!-- How to Order Section -->
+    <section class="section order-guide-section reveal" id="how-to-order">
+      <div class="container">
+        <div class="section-heading reveal">
+          <p class="eyebrow" data-i18n="guide.tag">Ordering Process</p>
+          <h2 data-i18n="guide.title">How to Place Your Order</h2>
+          <p data-i18n="guide.subtitle">Simple 4-step process to get fresh sweets delivered to your door</p>
+        </div>
+        <div class="guide-grid">
+          <div class="guide-card">
+            <div class="guide-step-number">1</div>
+            <i class="fa-solid fa-cart-plus guide-icon" aria-hidden="true"></i>
+            <h3 data-i18n="guide.step1.title">Browse & Add to Cart</h3>
+            <p data-i18n="guide.step1.desc">Explore our sweets and savouries. Choose your size (250g, 500g, 1kg) and add to cart.</p>
+          </div>
+          <div class="guide-card">
+            <div class="guide-step-number">2</div>
+            <i class="fa-solid fa-address-card guide-icon" aria-hidden="true"></i>
+            <h3 data-i18n="guide.step2.title">Provide Delivery Details</h3>
+            <p data-i18n="guide.step2.desc">Click checkout inside your basket, fill in your name, WhatsApp number, and delivery address.</p>
+          </div>
+          <div class="guide-card">
+            <div class="guide-step-number">3</div>
+            <i class="fa-solid fa-file-pdf guide-icon" aria-hidden="true"></i>
+            <h3 data-i18n="guide.step3.title">Get PDF Receipt</h3>
+            <p data-i18n="guide.step3.desc">Confirm details and place order. Your official PDF order receipt will download automatically.</p>
+          </div>
+          <div class="guide-card">
+            <div class="guide-step-number">4</div>
+            <i class="fa-solid fa-paper-plane guide-icon" aria-hidden="true"></i>
+            <h3 data-i18n="guide.step4.title">WhatsApp Confirmation</h3>
+            <p data-i18n="guide.step4.desc">Click "Open WhatsApp to Confirm" to send the order details text directly to the store owner.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Custom Gift Box Builder Section -->
+    <section class="section giftbox-section reveal" id="giftbox-builder" style="background: var(--ivory);">
+      <div class="container">
+        <div class="section-heading reveal">
+          <p class="eyebrow" data-i18n="giftbox.eyebrow">Festival Special</p>
+          <h2 data-i18n="giftbox.title">Build Your Assorted Gift Box</h2>
+          <p data-i18n="giftbox.subtitle">Mix and match your favorite sweets in a custom 500g or 1kg gift box.</p>
+        </div>
+
+        <div class="giftbox-container">
+          <!-- Control Panel -->
+          <div class="giftbox-controls">
+            <div class="giftbox-size-selector">
+              <span class="control-label" data-i18n="giftbox.selectSize">Choose Box Size:</span>
+              <div class="size-options">
+                <button type="button" class="btn btn-size active" data-size="500">500g</button>
+                <button type="button" class="btn btn-size" data-size="1000">1kg</button>
+              </div>
+            </div>
+
+            <!-- Dynamic Gauge / Progress bar -->
+            <div class="giftbox-status-card">
+              <div class="status-labels">
+                <span class="status-weight-filled"><strong id="boxCurrentWeight">0</strong>g / <span id="boxTargetWeight">500</span>g</span>
+                <span class="status-price"><strong id="boxCurrentPrice">₹0</strong></span>
+              </div>
+              <div class="gauge-bar-bg">
+                <div class="gauge-bar-fill" id="boxProgressFill" style="width: 0%;"></div>
+              </div>
+              <p class="status-message" id="boxStatusMessage" data-i18n="giftbox.statusEmpty">Add sweets to fill up your box!</p>
+            </div>
+
+            <!-- Drag and Drop Dropzone -->
+            <div class="giftbox-dropzone" id="giftboxDropzone">
+              <i class="fa-solid fa-box-open dropzone-icon" aria-hidden="true"></i>
+              <span class="dropzone-text" data-i18n="giftbox.dropzoneText">Drag & Drop Sweets Here</span>
+            </div>
+
+            <button type="button" class="btn btn-primary w-100" id="addGiftBoxToCartBtn" disabled>
+              <i class="fa-solid fa-gift" aria-hidden="true"></i>
+              <span data-i18n="giftbox.addBtn">Add Custom Box to Cart</span>
+            </button>
+          </div>
+
+          <!-- Sweets Mix List -->
+          <div class="giftbox-sweets-mix" id="giftboxSweetsMix">
+            <!-- Dynamically populated in script.js -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section menu-section" id="savouries">
+      <div class="section-heading reveal">
+        <p class="eyebrow" data-i18n="savouries.eyebrow">Fresh Savouries</p>
+        <h2 data-i18n="savouries.title">Crispy & Spicy Snacks</h2>
+        <p data-i18n="savouries.subtitle">Freshly prepared with pure oil, hand-picked spices, and traditional recipes for that perfect crunchy bite.</p>
+      </div>
+      <div class="savouries-container" id="savouriesContainer"></div>
+    </section>
+
+    <section class="section menu-section" id="sweets">
+      <div class="section-heading reveal">
+        <p class="eyebrow" data-i18n="sweets.eyebrow">Signature Sweets</p>
+        <h2 data-i18n="sweets.title">Our Sweet Favourites</h2>
+        <p data-i18n="sweets.subtitle">Made with slow-roasted flour, fragrant cardamom, premium nuts, and the unmistakable richness of traditional ghee.</p>
+      </div>
+      <div class="savouries-container" id="sweetsContainer"></div>
+    </section>
+
+    <section class="section about-section" id="about">
+      <div class="about-layout">
+        <div class="about-copy reveal">
+          <p class="eyebrow" data-i18n="about.eyebrow">Our heritage</p>
+          <h2 data-i18n="about.title">Sweetness made with patience, pride, and pure ingredients.</h2>
+          <p data-i18n="about.body">For generations, Ramachandra sweets and backery has prepared beloved Indian sweets the traditional way: small batches, careful roasting, clean ingredients, and recipes that bring families back for one more box.</p>
+          <a class="btn btn-primary" href="https://www.google.com/maps?vet=10CAAQoqAOahcKEwiQsqq0kLSVAxUAAAAAHQAAAAAQBQ..i&pvq=Cg0vZy8xMWgybGp2dDQ4IhwKFnJhbWFjaGFuZHJhIHN3ZWV0IHNob3AQAhgD&lqi=ChZyYW1hY2hhbmRyYSBzd2VldCBzaG9wSIjJtaiKr4CACFoiEAAQARACGAAYASIWcmFtYWNoYW5kcmEgc3dlZXQgc2hvcJIBBmJha2VyeQ&fvr=1&cs=1&um=1&ie=UTF-8&fb=1&gl=in&sa=X&ftid=0x3baa857fb1ce3771:0x5285b03adf37debb" target="_blank" rel="noopener">
+            <span data-i18n="about.cta">Visit Our Shop</span>
+            <i class="fa-solid fa-location-dot" aria-hidden="true"></i>
+          </a>
+        </div>
+
+        <div class="promise-grid reveal">
+          <div class="promise-item">
+            <i class="fa-solid fa-mortar-pestle" aria-hidden="true"></i>
+            <h3 data-i18n="about.promiseOneTitle">Traditional Recipes</h3>
+            <p data-i18n="about.promiseOneText">Measured by hand and perfected through daily practice.</p>
+          </div>
+          <div class="promise-item">
+            <i class="fa-solid fa-seedling" aria-hidden="true"></i>
+            <h3 data-i18n="about.promiseTwoTitle">Fresh Ingredients</h3>
+            <p data-i18n="about.promiseTwoText">Premium nuts, pure ghee, and aromatic spices.</p>
+          </div>
+          <div class="promise-item">
+            <i class="fa-solid fa-box-open" aria-hidden="true"></i>
+            <h3 data-i18n="about.promiseThreeTitle">Gift Ready</h3>
+            <p data-i18n="about.promiseThreeText">Packed beautifully for festivals, weddings, and family visits.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Reviews Section -->
+    <section class="section reviews-section reveal" id="reviews" style="background: var(--cream);">
+      <div class="container">
+        <div class="section-heading reveal">
+          <p class="eyebrow" data-i18n="reviews.eyebrow">Customer Love</p>
+          <h2 data-i18n="reviews.title">What Our Customers Say</h2>
+        </div>
+        <div class="reviews-slider-container">
+          <div class="reviews-slider" id="reviewsSlider">
+            <!-- Dynamic reviews populated in script.js -->
+          </div>
+          <div class="slider-controls">
+            <button type="button" class="btn-slider btn-prev" id="prevReview" aria-label="Previous review"><i class="fa-solid fa-arrow-left"></i></button>
+            <button type="button" class="btn-slider btn-next" id="nextReview" aria-label="Next review"><i class="fa-solid fa-arrow-right"></i></button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer" id="contact">
+    <div class="footer-layout">
+      <div class="footer-brand reveal">
+        <h2 data-i18n="brand.name">Sri Ramachandra Sweets & Bakery</h2>
+        <p data-i18n="footer.tagline">Traditional taste, freshly prepared, warmly served.</p>
+        <div class="social-links" aria-label="Social media links" data-i18n-aria-label="footer.socialAria">
+          <a href="https://wa.me/919626505520" target="_blank" rel="noopener" data-i18n-aria-label="footer.whatsapp"><i class="fa-brands fa-whatsapp" aria-hidden="true"></i></a>
+        </div>
+      </div>
+
+      <div class="footer-info reveal">
+        <h3 data-i18n="footer.contactTitle">Contact</h3>
+        <p><i class="fa-solid fa-phone" aria-hidden="true"></i><a href="tel:+919626505520">+91 96265 05520</a></p>
+        <p><i class="fa-solid fa-map-location-dot" aria-hidden="true"></i><a href="https://www.google.com/maps?vet=10CAAQoqAOahcKEwiQsqq0kLSVAxUAAAAAHQAAAAAQBQ..i&pvq=Cg0vZy8xMWgybGp2dDQ4IhwKFnJhbWFjaGFuZHJhIHN3ZWV0IHNob3AQAhgD&lqi=ChZyYW1hY2hhbmRyYSBzd2VldCBzaG9wSIjJtaiKr4CACFoiEAAQARACGAAYASIWcmFtYWNoYW5kcmEgc3dlZXQgc2hvcJIBBmJha2VyeQ&fvr=1&cs=1&um=1&ie=UTF-8&fb=1&gl=in&sa=X&ftid=0x3baa857fb1ce3771:0x5285b03adf37debb" target="_blank" rel="noopener" data-i18n="footer.directions">Get directions</a></p>
+      </div>
+
+      <div class="footer-info reveal">
+        <h3 data-i18n="footer.visitTitle">Visit Us</h3>
+        <p><i class="fa-solid fa-location-dot" aria-hidden="true"></i><a href="https://www.google.com/maps?vet=10CAAQoqAOahcKEwiQsqq0kLSVAxUAAAAAHQAAAAAQBQ..i&pvq=Cg0vZy8xMWgybGp2dDQ4IhwKFnJhbWFjaGFuZHJhIHN3ZWV0IHNob3AQAhgD&lqi=ChZyYW1hY2hhbmRyYSBzd2VldCBzaG9wSIjJtaiKr4CACFoiEAAQARACGAAYASIWcmFtYWNoYW5kcmEgc3dlZXQgc2hvcJIBBmJha2VyeQ&fvr=1&cs=1&um=1&ie=UTF-8&fb=1&gl=in&sa=X&ftid=0x3baa857fb1ce3771:0x5285b03adf37debb" target="_blank" rel="noopener"><span data-i18n="footer.address">N Car St, OVK Nagar, Kiranur, Tamil Nadu 622502</span></a></p>
+        <p><i class="fa-solid fa-clock" aria-hidden="true"></i><span data-i18n="footer.hours">Open daily: 6:00 AM - 10:00 PM</span></p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p data-i18n="footer.copyright">© 2026 Sri Ramachandra Sweets & Bakery. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- <div class="modal" id="quickViewModal" hidden>
+    <div class="modal-backdrop" data-close-modal></div>
+    <section class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <button class="modal-close" type="button" data-close-modal data-i18n-aria-label="modal.close">
+        <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+      </button>
+      <img class="modal-image" id="modalImage" src="assets/mysore-pak.svg" alt="">
+      <div class="modal-body">
+        <p class="eyebrow" data-i18n="modal.eyebrow">Today's special</p>
+        <h2 id="modalTitle">Mysore Pak</h2>
+        <p id="modalDescription">A melt-in-mouth classic made with roasted gram flour and golden ghee.</p>
+        <p class="modal-price" id="modalPrice">₹180</p>
+        <a class="btn btn-primary" href="tel:+919626505520">
+          <i class="fa-solid fa-phone" aria-hidden="true"></i>
+          <span data-i18n="modal.orderNow">Call to Order</span>
+        </a>
+      </div>
+    </section>
+  </div> -->
+
+  <div class="cart-drawer" id="cartDrawer" hidden>
+    <div class="cart-backdrop" data-close-cart></div>
+    <section class="cart-panel" role="dialog" aria-modal="true" aria-labelledby="cartTitle">
+      <div class="cart-header">
+        <h2 id="cartTitle" data-i18n="cart.title">Your Order Basket</h2>
+        <button class="cart-close" type="button" data-close-cart data-i18n-aria-label="cart.close" aria-label="Close Cart">
+          <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+        </button>
+      </div>
+      
+      <div class="cart-body" id="cartItemsList">
+        <!-- Rendered dynamically in script.js -->
+        <p class="cart-empty" data-i18n="cart.empty">Your basket is empty. Add some fresh sweets and savouries!</p>
+      </div>
+      
+      <div class="cart-footer">
+        <div class="cart-total-row">
+          <span data-i18n="cart.totalLabel">Total:</span>
+          <span class="cart-total-price" id="cartTotal">₹0</span>
+        </div>
+        <p class="cart-note" id="cartNote" hidden data-i18n="cart.note">* Note: Prices on request will be calculated on call.</p>
+        <button class="checkout-btn btn" id="checkoutBtn" type="button" disabled>
+          <i class="fa-brands fa-whatsapp" aria-hidden="true"></i>
+          <span data-i18n="cart.checkout">Send Order via WhatsApp</span>
+        </button>
+      </div>
+    </section>
+  </div>
+
+  <!-- Checkout & Receipt Modal -->
+  <div class="modal" id="checkoutModal" hidden>
+    <div class="modal-backdrop" id="checkoutBackdrop"></div>
+    <section class="modal-dialog checkout-dialog" role="dialog" aria-modal="true" aria-labelledby="checkoutModalTitle">
+      <button class="modal-close" type="button" id="closeCheckoutBtn" aria-label="Close Checkout">
+        <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+      </button>
+
+      <!-- Step 1: Customer Details Form -->
+      <div class="checkout-step" id="checkoutStepForm">
+        <h2 id="checkoutModalTitle" class="checkout-title">Checkout Details</h2>
+        <form class="checkout-form" id="checkoutForm" novalidate>
+          <div class="form-group">
+            <label for="custName">Full Name *</label>
+            <input type="text" id="custName" class="form-input" required placeholder="e.g. John Doe">
+            <span class="error-msg" id="nameError">Name is required</span>
+          </div>
+          <div class="form-group">
+            <label for="custWhatsApp">WhatsApp Phone Number *</label>
+            <input type="tel" id="custWhatsApp" class="form-input" required placeholder="e.g. 9626505520">
+            <span class="error-msg" id="phoneError">Valid WhatsApp number is required</span>
+          </div>
+          <div class="form-group">
+            <label for="custAddress">Complete Delivery Address *</label>
+            <textarea id="custAddress" class="form-input" rows="3" required placeholder="Street name, landmark, city, postal code"></textarea>
+            <span class="error-msg" id="addressError">Delivery address is required</span>
+          </div>
+          <div class="form-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 20px;">
+            <div class="form-group" style="margin-bottom: 0;">
+              <label for="deliveryDate" data-i18n="checkout.dateLabel">Preferred Delivery Date *</label>
+              <input type="date" id="deliveryDate" class="form-input" required>
+              <span class="error-msg" id="dateError">Select delivery date</span>
+            </div>
+            <div class="form-group" style="margin-bottom: 0;">
+              <label for="deliveryTimeSlot" data-i18n="checkout.timeSlotLabel">Preferred Time Slot *</label>
+              <select id="deliveryTimeSlot" class="form-input" required>
+                <option value="" disabled selected data-i18n="checkout.selectSlot">Select slot</option>
+                <option value="Morning (8:00 AM - 12:00 PM)" data-i18n="checkout.slotMorning">Morning (8 AM - 12 PM)</option>
+                <option value="Afternoon (12:00 PM - 4:00 PM)" data-i18n="checkout.slotAfternoon">Afternoon (12 PM - 4 PM)</option>
+                <option value="Evening (4:00 PM - 8:00 PM)" data-i18n="checkout.slotEvening">Evening (4 PM - 8 PM)</option>
+              </select>
+              <span class="error-msg" id="timeSlotError">Select time slot</span>
+            </div>
+          </div>
+          <button class="btn btn-primary w-100 mt-20" type="submit">
+            <span>Continue to Payment</span>
+            <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+          </button>
+        </form>
+      </div>
+
+      <!-- Step 2: Order Summary & Payment Method Selector -->
+      <div class="checkout-step" id="checkoutStepPayment" hidden>
+        <h2 class="checkout-title">Payment & Summary</h2>
+        
+        <div class="checkout-summary-box">
+          <h3>Order Summary</h3>
+          <div id="checkoutSummaryItems">
+            <!-- Dynamically populated in script.js -->
+          </div>
+          <div class="summary-total-row">
+            <span>Grand Total:</span>
+            <span id="checkoutSummaryTotal">₹0</span>
+          </div>
+        </div>
+
+        <div class="payment-method-container">
+          <h3>Payment Method</h3>
+          <div class="payment-option-card" style="cursor: default; max-width: 280px; margin: 0 auto 20px;">
+            <div class="payment-option-content" style="border-color: var(--saffron); background: rgba(243, 112, 33, 0.03);">
+              <i class="fa-solid fa-hand-holding-dollar" style="color: var(--saffron);" aria-hidden="true"></i>
+              <span>Cash on Delivery (COD)</span>
+            </div>
+          </div>
+        </div>
+
+        <button class="btn btn-primary w-100 mt-20" type="button" id="placeOrderBtn">
+          <i class="fa-solid fa-bag-shopping" aria-hidden="true"></i>
+          <span>Place Order</span>
+        </button>
+      </div>
+
+      <!-- Step 3: Success & Receipt Screen -->
+      <div class="checkout-step" id="checkoutStepReceipt" hidden>
+        <div class="receipt-header">
+          <i class="fa-solid fa-circle-check success-icon" aria-hidden="true"></i>
+          <h2 class="checkout-title">Order Placed Successfully!</h2>
+          <p>Your order has been recorded. Please find your receipt below.</p>
+        </div>
+
+        <div class="receipt-container" id="printableReceipt">
+          <!-- Populated in script.js -->
+        </div>
+
+        <div class="receipt-actions">
+          <button class="btn btn-secondary w-100" type="button" id="downloadReceiptBtn">
+            <i class="fa-solid fa-file-pdf" aria-hidden="true"></i>
+            <span>Download PDF Receipt</span>
+          </button>
+          <button class="btn btn-primary w-100" type="button" id="sendOwnerWhatsAppBtn">
+            <i class="fa-brands fa-whatsapp" aria-hidden="true"></i>
+            <span>Open WhatsApp to Confirm</span>
+          </button>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
