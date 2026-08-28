@@ -341,42 +341,42 @@
 
       <!-- Step 1: Customer Details Form -->
       <div class="checkout-step" id="checkoutStepForm">
-        <h2 id="checkoutModalTitle" class="checkout-title">Checkout Details</h2>
+        <h2 id="checkoutModalTitle" class="checkout-title">Checkout Details / ஆர்டர் விவரங்கள்</h2>
         <form class="checkout-form" id="checkoutForm" novalidate>
           <div class="form-group">
-            <label for="custName">Full Name *</label>
-            <input type="text" id="custName" class="form-input" required placeholder="e.g. John Doe">
-            <span class="error-msg" id="nameError">Name is required</span>
+            <label for="custName">Full Name / முழு பெயர் <span class="label-ta-sub">(உங்கள் பெயர்)</span> *</label>
+            <input type="text" id="custName" class="form-input" required placeholder="Enter your name | உங்கள் பெயரை உள்ளிடவும்">
+            <span class="error-msg" id="nameError">Full name is required / உங்கள் பெயரை உள்ளிடவும்</span>
           </div>
           <div class="form-group">
-            <label for="custWhatsApp">WhatsApp Phone Number *</label>
-            <input type="tel" id="custWhatsApp" class="form-input" required placeholder="e.g. 9626505520">
-            <span class="error-msg" id="phoneError">Valid WhatsApp number is required</span>
+            <label for="custWhatsApp">WhatsApp Phone Number / வாட்ஸ்அப் எண் *</label>
+            <input type="tel" id="custWhatsApp" class="form-input" required placeholder="Enter your phone number | உங்கள் தொலைபேசி எண்ணை உள்ளிடவும்">
+            <span class="error-msg" id="phoneError">Valid WhatsApp number required / தொலைபேசி எண்ணை உள்ளிடவும்</span>
           </div>
           <div class="form-group">
-            <label for="custAddress">Complete Delivery Address *</label>
-            <textarea id="custAddress" class="form-input" rows="3" required placeholder="Street name, landmark, city, postal code"></textarea>
-            <span class="error-msg" id="addressError">Delivery address is required</span>
+            <label for="custAddress">Complete Delivery Address / டெலிவரி முகவரி *</label>
+            <textarea id="custAddress" class="form-input" rows="3" required placeholder="Street name, landmark, city | உங்கள் முகவரியை உள்ளிடவும்"></textarea>
+            <span class="error-msg" id="addressError">Delivery address is required / டெலிவரி முகவரியை உள்ளிடவும்</span>
           </div>
-          <div class="form-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 20px;">
+          <div class="form-row-grid">
             <div class="form-group" style="margin-bottom: 0;">
-              <label for="deliveryDate" data-i18n="checkout.dateLabel">Preferred Delivery Date *</label>
+              <label for="deliveryDate">Preferred Delivery Date / டெலிவரி தேதி *</label>
               <input type="date" id="deliveryDate" class="form-input" required>
-              <span class="error-msg" id="dateError">Select delivery date</span>
+              <span class="error-msg" id="dateError">Select delivery date / தேதியைத் தேர்ந்தெடுக்கவும்</span>
             </div>
             <div class="form-group" style="margin-bottom: 0;">
-              <label for="deliveryTimeSlot" data-i18n="checkout.timeSlotLabel">Preferred Time Slot *</label>
+              <label for="deliveryTimeSlot">Select your preferred time slot / உங்களுக்கு விருப்பமான நேரத்தைத் தேர்ந்தெடுக்கவும் *</label>
               <select id="deliveryTimeSlot" class="form-input" required>
-                <option value="" disabled selected data-i18n="checkout.selectSlot">Select slot</option>
-                <option value="Morning (8:00 AM - 12:00 PM)" data-i18n="checkout.slotMorning">Morning (8 AM - 12 PM)</option>
-                <option value="Afternoon (12:00 PM - 4:00 PM)" data-i18n="checkout.slotAfternoon">Afternoon (12 PM - 4 PM)</option>
-                <option value="Evening (4:00 PM - 8:00 PM)" data-i18n="checkout.slotEvening">Evening (4 PM - 8 PM)</option>
+                <option value="" disabled selected>Select preferred time slot / நேரத்தைத் தேர்ந்தெடுக்கவும்</option>
+                <option value="Morning (8:00 AM - 12:00 PM)">Morning / காலை (8:00 AM - 12:00 PM)</option>
+                <option value="Afternoon (12:00 PM - 4:00 PM)">Afternoon / மதியம் (12:00 PM - 4:00 PM)</option>
+                <option value="Evening (4:00 PM - 8:00 PM)">Evening / மாலை (4:00 PM - 8:00 PM)</option>
               </select>
-              <span class="error-msg" id="timeSlotError">Select time slot</span>
+              <span class="error-msg" id="timeSlotError">Select time slot / நேரத்தைத் தேர்ந்தெடுக்கவும்</span>
             </div>
           </div>
           <button class="btn btn-primary w-100 mt-20" type="submit">
-            <span>Continue to Payment</span>
+            <span>Continue to Payment / அடுத்த படி</span>
             <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
           </button>
         </form>
@@ -384,30 +384,34 @@
 
       <!-- Step 2: Order Summary & Payment Method Selector -->
       <div class="checkout-step" id="checkoutStepPayment" hidden>
-        <h2 class="checkout-title">Payment & Summary</h2>
+        <h2 class="checkout-title">Payment & Summary / கட்டணம் & சுருக்கம்</h2>
         
         <div class="checkout-summary-box">
-          <h3>Order Summary</h3>
+          <h3>Order Summary / ஆர்டர் விவரங்கள்</h3>
           <div id="checkoutSummaryItems">
             <!-- Dynamically populated in script.js -->
           </div>
           <div class="summary-total-row">
-            <span>Grand Total:</span>
+            <span>Grand Total / மொத்தம்:</span>
             <span id="checkoutSummaryTotal">₹0</span>
           </div>
         </div>
 
         <div class="payment-method-container">
-          <h3>Payment Method</h3>
-          <div class="payment-option-card" style="cursor: default; max-width: 280px; margin: 0 auto 20px;">
+          <h3>Payment Method / செலுத்தும் முறை</h3>
+          <div class="payment-option-card" style="cursor: default; max-width: 320px; margin: 0 auto 20px;">
             <div class="payment-option-content" style="border-color: var(--saffron); background: rgba(243, 112, 33, 0.03);">
               <i class="fa-solid fa-hand-holding-dollar" style="color: var(--saffron);" aria-hidden="true"></i>
-              <span>Cash on Delivery (COD)</span>
+              <span>Cash on Delivery (COD) / நேரில் பணம் செலுத்துதல்</span>
             </div>
           </div>
         </div>
 
         <button class="btn btn-primary w-100 mt-20" type="button" id="placeOrderBtn">
+          <i class="fa-solid fa-bag-shopping" aria-hidden="true"></i>
+          <span>Place Order via WhatsApp / வாட்ஸ்அப்பில் ஆர்டர் செய்யவும்</span>
+        </button>
+      </div>
           <i class="fa-solid fa-bag-shopping" aria-hidden="true"></i>
           <span>Place Order</span>
         </button>

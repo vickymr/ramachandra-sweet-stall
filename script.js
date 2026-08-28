@@ -857,10 +857,11 @@ function openCheckout() {
   if (deliveryDate) deliveryDate.value = "";
   if (deliveryTimeSlot) deliveryTimeSlot.value = "";
   
-  // Set minimum date to today
+  // Set minimum date and default value to today
   if (deliveryDate) {
     const today = new Date().toISOString().split('T')[0];
     deliveryDate.setAttribute('min', today);
+    deliveryDate.value = today;
   }
   
   // Clear errors
