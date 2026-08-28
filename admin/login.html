@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Login — Sri Ramachandra Sweets & Bakery</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --saffron: #F37021;
+      --gold: #D4A017;
+      --dark: #1a0a00;
+      --card-bg: #fff;
+      --text: #2d1a00;
+      --muted: #7a6050;
+      --error: #dc2626;
+    }
+    body {
+      font-family: 'Poppins', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #1a0a00 0%, #3d1a00 40%, #1a0a00 100%);
+      padding: 20px;
+      position: relative;
+      overflow: hidden;
+    }
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background: radial-gradient(ellipse at 30% 50%, rgba(243,112,33,0.15) 0%, transparent 60%),
+                  radial-gradient(ellipse at 70% 30%, rgba(212,160,23,0.1) 0%, transparent 50%);
+      pointer-events: none;
+    }
+    .login-card {
+      background: rgba(255,255,255,0.97);
+      border-radius: 24px;
+      padding: 48px 44px;
+      width: 100%;
+      max-width: 420px;
+      box-shadow: 0 32px 80px rgba(0,0,0,0.45), 0 0 0 1px rgba(243,112,33,0.15);
+      position: relative;
+      z-index: 1;
+    }
+    .login-brand {
+      text-align: center;
+      margin-bottom: 36px;
+    }
+    .login-brand .brand-icon {
+      width: 64px; height: 64px;
+      background: linear-gradient(135deg, var(--saffron), var(--gold));
+      border-radius: 18px;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 16px;
+      box-shadow: 0 8px 24px rgba(243,112,33,0.35);
+    }
+    .login-brand .brand-icon i { font-size: 28px; color: #fff; }
+    .login-brand h1 { font-size: 1.4rem; font-weight: 700; color: var(--text); line-height: 1.3; }
+    .login-brand p { font-size: 0.82rem; color: var(--muted); margin-top: 4px; }
+    .admin-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: rgba(243,112,33,0.1); color: var(--saffron);
+      font-size: 0.72rem; font-weight: 600; letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 4px 12px; border-radius: 20px;
+      margin-bottom: 12px;
+    }
+    .form-group { margin-bottom: 20px; }
+    .form-group label {
+      display: block; font-size: 0.82rem; font-weight: 600;
+      color: var(--muted); margin-bottom: 8px; letter-spacing: 0.02em;
+    }
+    .input-wrap { position: relative; }
+    .input-wrap i {
+      position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
+      color: var(--muted); font-size: 15px;
+    }
+    .form-input {
+      width: 100%; padding: 13px 14px 13px 42px;
+      border: 2px solid #e8e0d6;
+      border-radius: 12px;
+      font-size: 0.95rem; font-family: 'Poppins', sans-serif;
+      color: var(--text); background: #fafaf8;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      outline: none;
+    }
+    .form-input:focus {
+      border-color: var(--saffron);
+      box-shadow: 0 0 0 3px rgba(243,112,33,0.12);
+      background: #fff;
+    }
+    .toggle-pw {
+      position: absolute; right: 14px; top: 50%; transform: translateY(-50%);
+      cursor: pointer; color: var(--muted); font-size: 14px;
+      background: none; border: none; padding: 0;
+    }
+    .btn-login {
+      width: 100%; padding: 14px;
+      background: linear-gradient(135deg, var(--saffron), #e05a10);
+      color: #fff; border: none; border-radius: 12px;
+      font-size: 1rem; font-weight: 700; font-family: 'Poppins', sans-serif;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center; gap: 10px;
+      transition: transform 0.15s, box-shadow 0.2s;
+      box-shadow: 0 6px 20px rgba(243,112,33,0.35);
+      margin-top: 8px;
+    }
+    .btn-login:hover { transform: translateY(-1px); box-shadow: 0 10px 28px rgba(243,112,33,0.45); }
+    .btn-login:active { transform: translateY(0); }
+    .btn-login:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+    .error-banner {
+      background: rgba(220,38,38,0.08); border: 1.5px solid rgba(220,38,38,0.25);
+      color: var(--error); border-radius: 10px;
+      padding: 10px 14px; font-size: 0.84rem;
+      display: none; align-items: center; gap: 8px; margin-bottom: 18px;
+    }
+    .error-banner.show { display: flex; }
+    .back-link {
+      text-align: center; margin-top: 24px;
+    }
+    .back-link a {
+      color: var(--muted); font-size: 0.82rem; text-decoration: none;
+      display: inline-flex; align-items: center; gap: 6px;
+      transition: color 0.2s;
+    }
+    .back-link a:hover { color: var(--saffron); }
+    .spinner { display: none; width: 18px; height: 18px; border: 2px solid rgba(255,255,255,0.4); border-top-color: #fff; border-radius: 50%; animation: spin 0.7s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+  </style>
+</head>
+<body>
+  <div class="login-card">
+    <div class="login-brand">
+      <div class="brand-icon"><i class="fa-solid fa-store"></i></div>
+      <div class="admin-badge"><i class="fa-solid fa-shield-halved"></i> Admin Portal</div>
+      <h1>Sri Ramachandra<br>Sweets & Bakery</h1>
+      <p>Sign in to manage your store</p>
+    </div>
+
+    <div class="error-banner" id="errorBanner">
+      <i class="fa-solid fa-circle-exclamation"></i>
+      <span id="errorMsg">Invalid username or password.</span>
+    </div>
+
+    <form id="loginForm" novalidate>
+      <div class="form-group">
+        <label for="username">Username</label>
+        <div class="input-wrap">
+          <i class="fa-solid fa-user"></i>
+          <input type="text" id="username" class="form-input" placeholder="Enter username" autocomplete="username" required>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <div class="input-wrap">
+          <i class="fa-solid fa-lock"></i>
+          <input type="password" id="password" class="form-input" placeholder="Enter password" autocomplete="current-password" required>
+          <button type="button" class="toggle-pw" id="togglePw" aria-label="Toggle password visibility">
+            <i class="fa-solid fa-eye" id="togglePwIcon"></i>
+          </button>
+        </div>
+      </div>
+      <button type="submit" class="btn-login" id="loginBtn">
+        <span class="spinner" id="spinner"></span>
+        <i class="fa-solid fa-right-to-bracket" id="loginIcon"></i>
+        <span id="loginBtnText">Sign In</span>
+      </button>
+    </form>
+
+    <div class="back-link">
+      <a href="/"><i class="fa-solid fa-arrow-left"></i> Back to Website</a>
+    </div>
+  </div>
+
+  <script>
+    // Redirect if already logged in
+    if (localStorage.getItem('adminToken')) {
+      window.location.href = '/admin/dashboard';
+    }
+
+    // Toggle password visibility
+    document.getElementById('togglePw').addEventListener('click', () => {
+      const pw = document.getElementById('password');
+      const icon = document.getElementById('togglePwIcon');
+      if (pw.type === 'password') {
+        pw.type = 'text';
+        icon.className = 'fa-solid fa-eye-slash';
+      } else {
+        pw.type = 'password';
+        icon.className = 'fa-solid fa-eye';
+      }
+    });
+
+    // Login form submit
+    document.getElementById('loginForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const username = document.getElementById('username').value.trim();
+      const password = document.getElementById('password').value;
+      const btn = document.getElementById('loginBtn');
+      const spinner = document.getElementById('spinner');
+      const loginIcon = document.getElementById('loginIcon');
+      const loginBtnText = document.getElementById('loginBtnText');
+      const errorBanner = document.getElementById('errorBanner');
+      const errorMsg = document.getElementById('errorMsg');
+
+      if (!username || !password) {
+        errorMsg.textContent = 'Please enter username and password.';
+        errorBanner.classList.add('show');
+        return;
+      }
+
+      // Loading state
+      btn.disabled = true;
+      spinner.style.display = 'block';
+      loginIcon.style.display = 'none';
+      loginBtnText.textContent = 'Signing In...';
+      errorBanner.classList.remove('show');
+
+      try {
+        const res = await fetch('/api/auth/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ username, password })
+        });
+        const data = await res.json();
+
+        if (res.ok && data.token) {
+          localStorage.setItem('adminToken', data.token);
+          localStorage.setItem('adminUsername', data.username);
+          loginBtnText.textContent = 'Success! Redirecting...';
+          setTimeout(() => { window.location.href = '/admin/dashboard'; }, 500);
+        } else {
+          errorMsg.textContent = data.error || 'Invalid username or password.';
+          errorBanner.classList.add('show');
+          btn.disabled = false;
+          spinner.style.display = 'none';
+          loginIcon.style.display = '';
+          loginBtnText.textContent = 'Sign In';
+        }
+      } catch (err) {
+        errorMsg.textContent = 'Server error. Please try again.';
+        errorBanner.classList.add('show');
+        btn.disabled = false;
+        spinner.style.display = 'none';
+        loginIcon.style.display = '';
+        loginBtnText.textContent = 'Sign In';
+      }
+    });
+  </script>
+</body>
+</html>

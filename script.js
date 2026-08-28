@@ -1,164 +1,78 @@
-const sweetGroups = [
-  {
-    priceHeader: "₹300 / 1 kg | ₹150 / 500 g | ₹75 / 250 g",
-    priceHeaderTa: "₹300 / 1 கிலோ | ₹150 / 500 கிராம் | ₹75 / 250 கிராம்",
-    sizes: [
-      { name: "250 g", price: 75 },
-      { name: "500 g", price: 150 },
-      { name: "1 kg", price: 300 }
-    ],
-    sizesTa: [
-      { name: "250 கிராம்", price: 75 },
-      { name: "500 கிராம்", price: 150 },
-      { name: "1 கிலோ", price: 300 }
-    ],
-    products: [
-      { key: "boondhiLaddu", nameEn: "Boondhi Laddu", nameTa: "பூந்தி லட்டு", descEn: "Soft saffron laddus with cashews, raisins, and a bright festive aroma.", descTa: "முந்திரி, திராட்சை, குங்குமப்பூ மணம் நிறைந்த மென்மையான லட்டுகள்.", image: "assets/laddu.svg" },
-      { key: "badusha", nameEn: "Badusha", nameTa: "பாதுஷா", descEn: "Layered, flaky rings glazed with gentle sugar syrup.", descTa: "மெதுவான சர்க்கரை பாகு பூசப்பட்ட அடுக்குகள் நிறைந்த மொறு மொறு இனிப்பு.", image: "assets/balushahi.svg" },
-      { key: "mysorePak", nameEn: "Mysore Pak", nameTa: "மைசூர் பாக்", descEn: "A melt-in-mouth classic made with roasted gram flour and golden ghee.", descTa: "வறுத்த கடலைமாவும் தங்க நிற நெய்யும் சேர்ந்து வாயில் கரையும் பாரம்பரிய சுவை.", image: "assets/mysore-pak.svg" }
-    ]
-  },
-  {
-    priceHeader: "₹340 / 1 kg | ₹170 / 500 g | ₹85 / 250 g",
-    priceHeaderTa: "₹340 / 1 கிலோ | ₹170 / 500 கிராம் | ₹85 / 250 கிராம்",
-    sizes: [
-      { name: "250 g", price: 85 },
-      { name: "500 g", price: 170 },
-      { name: "1 kg", price: 340 }
-    ],
-    sizesTa: [
-      { name: "250 கிராம்", price: 85 },
-      { name: "500 கிராம்", price: 170 },
-      { name: "1 கிலோ", price: 340 }
-    ],
-    products: [
-      { key: "mixedSweetBox", nameEn: "Mixed Sweet Box", nameTa: "மிக்ஸட் ஸ்வீட் பாக்ஸ்", descEn: "A selected assortment of premium traditional sweets for gifting.", descTa: "பண்டிகை மற்றும் பரிசுகளுக்கு ஏற்ற பல்வேறு இனிப்புகளின் கலவை.", image: "assets/hero-sweets.svg" }
-    ]
-  },
-  {
-    priceHeader: "₹400 / 1 kg | ₹200 / 500 g | ₹100 / 250 g",
-    priceHeaderTa: "₹400 / 1 கிலோ | ₹200 / 500 கிராம் | ₹100 / 250 கிராம்",
-    sizes: [
-      { name: "250 g", price: 100 },
-      { name: "500 g", price: 200 },
-      { name: "1 kg", price: 400 }
-    ],
-    sizesTa: [
-      { name: "250 கிராம்", price: 100 },
-      { name: "500 கிராம்", price: 200 },
-      { name: "1 கிலோ", price: 400 }
-    ],
-    products: [
-      { key: "whiteBurfi", nameEn: "White Burfi", nameTa: "வெள்ளை பர்ஃபி", descEn: "Classic milk barfi squares with a rich, creamy, melt-in-mouth texture.", descTa: "கிரீமியான பால் கொண்டு செய்யப்பட்ட கிளாசிக் வெள்ளை பர்ஃபி.", image: "assets/barfi.svg" },
-      { key: "chocolateBurfi", nameEn: "Chocolate Burfi", nameTa: "சாக்லேட் பர்ஃபி", descEn: "Double-layered milk barfi with a rich, delicious chocolate layer.", descTa: "பால் பர்ஃபியுடன் சாக்லேட் சுவை கலந்த இனிப்பு பர்ஃபி.", image: "assets/barfi.svg" },
-      { key: "roseBurfi", nameEn: "Rose Burfi", nameTa: "ரோஸ் பர்ஃபி", descEn: "Milk sweet squares delicately infused with aromatic rose extract.", descTa: "ரோஜா இதழ்கள் மற்றும் ரோஜா மணம் கொண்ட பால் பர்ஃபி.", image: "assets/barfi.svg" },
-      { key: "fruitHalwa", nameEn: "Fruit Halwa", nameTa: "புரூட் அல்வா", descEn: "Sweet, chewy halwa loaded with real fruit pulp and dry fruits.", descTa: "புதிய பழங்கள் மற்றும் பருப்புகள் சேர்த்து செய்யப்பட்ட அல்வா.", image: "assets/halwa.svg" },
-      { key: "motiLaddu", nameEn: "Moti Laddu", nameTa: "மோதி லட்டு", descEn: "Fine-grained, delicious laddoos made with tiny gram flour pearls.", descTa: "மெல்லிய பூந்திகள் கொண்டு நேர்த்தியாக செய்யப்பட்ட மோதி லட்டு.", image: "assets/laddu.svg" },
-      { key: "motiPak", nameEn: "Moti Pak", nameTa: "மோதி பாக்", descEn: "Barfi-like sweet made with fine boondi, saffron, and condensed milk.", descTa: "மோதி பூந்தி மற்றும் பால் கோவா சேர்த்து செய்த சுவை மிகு மோதி பாக்.", image: "assets/mysore-pak.svg" }
-    ]
-  },
-  {
-    priceHeader: "₹480 / 1 kg | ₹240 / 500 g | ₹120 / 250 g",
-    priceHeaderTa: "₹480 / 1 கிலோ | ₹240 / 500 கிராம் | ₹120 / 250 கிராம்",
-    sizes: [
-      { name: "250 g", price: 120 },
-      { name: "500 g", price: 240 },
-      { name: "1 kg", price: 480 }
-    ],
-    sizesTa: [
-      { name: "250 கிராம்", price: 120 },
-      { name: "500 கிராம்", price: 240 },
-      { name: "1 கிலோ", price: 480 }
-    ],
-    products: [
-      { key: "cashewnutHalwa", nameEn: "Cashewnut Halwa", nameTa: "முந்திரி அல்வா", descEn: "Glossy, rich wheat halwa slow-cooked with roasted cashew nuts.", descTa: "முந்திரி பருப்புகள் சேர்த்து நெய்யில் கிளறிய கோதுமை அல்வா.", image: "assets/halwa.svg" },
-      { key: "soanPapdi", nameEn: "Soan Papdi", nameTa: "சோன் பப்டி", descEn: "Flaky, airy sweet made with roasted gram flour and pistachios.", descTa: "ஏலக்காய் மணமும் பருப்பு சுவையும் கொண்ட பஞ்சுபோல் மென்மையான சோன் பப்டி.", image: "assets/soan-papdi.svg" },
-      { key: "specialMysorePak", nameEn: "Special Mysore Pak", nameTa: "ஸ்பெஷல் மைசூர் பாக்", descEn: "Super-rich ghee Mysore Pak that melts instantly in your mouth.", descTa: "அதிக நெய் சேர்த்து கூடுதல் மென்மையாக செய்யப்பட்ட ஸ்பெஷல் மைசூர் பாக்.", image: "assets/mysore-pak.svg" },
-      { key: "palkova", nameEn: "Palkova", nameTa: "பால்கோவா", descEn: "Slow-cooked milk sweet with rich, caramelized milk solids.", descTa: "சுத்தமான பாலில் மெதுவாக கிளறி செய்யப்பட்ட caramel பால்கோவா.", image: "assets/palkova.svg" },
-      { key: "milkCake", nameEn: "Milk Cake", nameTa: "மில்க் கேக்", descEn: "Grainy, dense milk sweet with a caramelized brown core.", descTa: "கரமேல் சுவையுடன் நயமான மில்க் கேக் இனிப்பு.", image: "assets/barfi.svg" }
-    ]
-  },
-  {
-    priceHeader: "₹900 / 1 kg | ₹450 / 500 g | ₹225 / 250 g",
-    priceHeaderTa: "₹900 / 1 கிலோ | ₹450 / 500 கிராம் | ₹225 / 250 கிராம்",
-    sizes: [
-      { name: "250 g", price: 225 },
-      { name: "500 g", price: 450 },
-      { name: "1 kg", price: 900 }
-    ],
-    sizesTa: [
-      { name: "250 கிராம்", price: 225 },
-      { name: "500 கிராம்", price: 450 },
-      { name: "1 கிலோ", price: 900 }
-    ],
-    products: [
-      { key: "kajuKatli", nameEn: "Kaju Katli", nameTa: "காஜு கத்லி", descEn: "Smooth cashew diamonds finished with a delicate silver shine.", descTa: "மென்மையான முந்திரி வைர துண்டுகள், மெலிதான வெள்ளி அலங்காரத்துடன்.", image: "assets/kaju-katli.svg" }
-    ]
-  }
-];
+// ── Product data loaded from backend API ──────────────────────────────────────
+// These arrays are populated by loadProductsFromAPI() on page load.
+// Do NOT hardcode product data here — use the Admin Dashboard to manage products.
+let sweetGroups = [];
+let savouryGroups = [];
 
-const savouryGroups = [
-  {
-    priceHeader: "₹300 / 1 kg | ₹150 / 500 g | ₹75 / 250 g",
-    priceHeaderTa: "₹300 / 1 கிலோ | ₹150 / 500 கிராம் | ₹75 / 250 கிராம்",
-    sizes: [
-      { name: "250 g", price: 75 },
-      { name: "500 g", price: 150 },
-      { name: "1 kg", price: 300 }
-    ],
-    sizesTa: [
-      { name: "250 கிராம்", price: 75 },
-      { name: "500 கிராம்", price: 150 },
-      { name: "1 கிலோ", price: 300 }
-    ],
-    products: [
-      { key: "butterMurukku", nameEn: "Butter Murukku", nameTa: "வெண்ணெய் முறுக்கு", descEn: "Crisp and melt-in-mouth murukku made with fresh butter.", descTa: "வெண்ணெய் சேர்த்து தயாரிக்கப்பட்ட மொறு மொறு முறுக்கு.", image: "assets/ola-pakoda.svg" },
-      { key: "mixture", nameEn: "Mixture", nameTa: "மிக்சர்", descEn: "Crunchy savoury mix with sev, nuts, boondi, and spices.", descTa: "சேவ், பூந்தி, பருப்பு, மசாலா சேர்த்த மொறு மொறு கார கலவை.", image: "assets/mixture.svg" },
-      { key: "motaMixture", nameEn: "Mota Mixture", nameTa: "தடித்த மிக்சர்", descEn: "Traditional spicy mixture with thicker sev and gram flour shapes.", descTa: "தடிமனான காரசேவ் மற்றும் கார துண்டுகள் அடங்கிய பாரம்பரிய மிக்சர்.", image: "assets/mixture.svg" },
-      { key: "ribbonMurukku", nameEn: "Ribbon Murukku", nameTa: "ரிப்பன் முறுக்கு", descEn: "Crisp ribbon-style pakoda with a classic South Indian crunch.", descTa: "தென்னிந்திய மொறு மொறு சுவையுடன் ரிப்பன் வடிவ பக்கோடா.", image: "assets/ola-pakoda.svg" },
-      { key: "karaSev", nameEn: "Kara Sev", nameTa: "கார சேவ்", descEn: "Spicy gram-flour sev fried crisp for tea-time snacking.", descTa: "டீ நேரத்திற்கு ஏற்ற காரமான கடலைமாவு சேவ்.", image: "assets/kara-sev.svg" },
-      { key: "karaBoondhi", nameEn: "Kara Boondhi", nameTa: "கார பூந்தி", descEn: "Crisp gram flour pearls seasoned with curry leaves and peanuts.", descTa: "கருவேப்பிலை மற்றும் முந்திரி சேர்த்த மொறு மொறு பூந்தி.", image: "assets/mixture.svg" },
-      { key: "onionPakoda", nameEn: "Onion Pakoda", nameTa: "வெங்காய பக்கோடா", descEn: "Deep-fried onion fritters crisp on the outside, soft inside.", descTa: "வெங்காயம் மற்றும் மசாலா சேர்த்த மொறு மொறு பக்கோடா.", image: "assets/ola-pakoda.svg" },
-      { key: "garlicSev", nameEn: "Garlic Sev", nameTa: "பூண்டு சேவ்", descEn: "Crispy sev infused with strong, aromatic garlic and red chillies.", descTa: "பூண்டு மணம் மற்றும் மிளகாய் காரம் கொண்ட மொறு மொறு சேவ்.", image: "assets/kara-sev.svg" },
-      { key: "kadalaPakoda", nameEn: "Kadala Pakoda", nameTa: "கடலை பக்கோடா", descEn: "Spicy, crunchy peanut fritters with gram flour coating.", descTa: "கடலை மற்றும் மசாலா சேர்த்த மொறு மொறு வேர்க்கடலை பக்கோடா.", image: "assets/thattai.svg" }
-    ]
-  },
-  {
-    priceHeader: "₹340 / 1 kg | ₹170 / 500 g | ₹85 / 250 g",
-    priceHeaderTa: "₹340 / 1 கிலோ | ₹170 / 500 கிராம் | ₹85 / 250 கிராம்",
-    sizes: [
-      { name: "250 g", price: 85 },
-      { name: "500 g", price: 170 },
-      { name: "1 kg", price: 340 }
-    ],
-    sizesTa: [
-      { name: "250 கிராம்", price: 85 },
-      { name: "500 கிராம்", price: 170 },
-      { name: "1 கிலோ", price: 340 }
-    ],
-    products: [
-      { key: "splMixture", nameEn: "SPL Mixture", nameTa: "ஸ்பெஷல் மிக்சர்", descEn: "Premium mixture loaded with cashews, raisins, and special spices.", descTa: "முந்திரி, திராட்சை மற்றும் சிறப்பு மசாலாக்கள் சேர்த்த உயர்தர மிக்சர்.", image: "assets/mixture.svg" }
-    ]
-  },
-  {
-    priceHeader: "₹400 / 1 kg | ₹200 / 500 g | ₹100 / 250 g",
-    priceHeaderTa: "₹400 / 1 கிலோ | ₹200 / 500 கிராம் | ₹100 / 250 கிராம்",
-    sizes: [
-      { name: "250 g", price: 100 },
-      { name: "500 g", price: 200 },
-      { name: "1 kg", price: 400 }
-    ],
-    sizesTa: [
-      { name: "250 கிராம்", price: 100 },
-      { name: "500 கிராம்", price: 200 },
-      { name: "1 கிலோ", price: 400 }
-    ],
-    products: [
-      { key: "potatoChips", nameEn: "Potato Chips", nameTa: "உருளைக்கிழங்கு சிப்ஸ்", descEn: "Classic salted potato chips with a fresh crunchy bite.", descTa: "புதிய மொறு மொறு சுவையுடன் கிளாசிக் உப்பு உருளைக்கிழங்கு சிப்ஸ்.", image: "assets/potato-chips.svg" },
-      { key: "bananaChips", nameEn: "Banana Chips", nameTa: "வாழைக்காய் சிப்ஸ்", descEn: "Golden Kerala-style banana chips fried thin and crisp.", descTa: "மெல்லியதாக பொரித்த பொன்னிற நேந்திரன் வாழைக்காய் சிப்ஸ்.", image: "assets/nendran-banana-chips.svg" }
-    ]
+/**
+ * Converts a flat product + sizes array from the API
+ * into the grouped format that the existing render functions expect.
+ */
+function apiDataToGroups(products) {
+  // Group products by their unique price tier (sorted sizes joined)
+  const groupMap = new Map();
+  products.forEach(p => {
+    const sizes = p.sizes || [];
+    // Build a price-tier key so products with identical sizes group together
+    const tierKey = sizes.map(s => `${s.size_name}:${s.price}`).join('|');
+    if (!groupMap.has(tierKey)) {
+      // Build priceHeader string from sizes
+      const priceHeader = sizes.map(s => `₹${s.price} / ${s.size_name}`).join(' | ');
+      const priceHeaderTa = sizes.map(s => `₹${s.price} / ${s.size_name_ta || s.size_name}`).join(' | ');
+      groupMap.set(tierKey, {
+        priceHeader,
+        priceHeaderTa,
+        sizes: sizes.map(s => ({ name: s.size_name, price: s.price })),
+        sizesTa: sizes.map(s => ({ name: s.size_name_ta || s.size_name, price: s.price })),
+        products: []
+      });
+    }
+    groupMap.get(tierKey).products.push({
+      key: p.key,
+      nameEn: p.name_en,
+      nameTa: p.name_ta,
+      descEn: p.desc_en || '',
+      descTa: p.desc_ta || '',
+      image: p.image,
+      in_giftbox: p.in_giftbox !== undefined ? p.in_giftbox : 1
+    });
+  });
+  return Array.from(groupMap.values());
+}
+
+let previousProductsJson = "";
+
+async function loadProductsFromAPI() {
+  try {
+    const res = await fetch('/api/products');
+    if (!res.ok) throw new Error('Failed to fetch products');
+    const data = await res.json(); // [{category, products}, ...]
+
+    const jsonStr = JSON.stringify(data);
+    if (jsonStr === previousProductsJson) {
+      return; // Skip DOM re-render if data has not changed to keep scroll silky smooth!
+    }
+    previousProductsJson = jsonStr;
+
+    sweetGroups = [];
+    savouryGroups = [];
+
+    data.forEach(group => {
+      const slug = group.category.slug;
+      const groups = apiDataToGroups(group.products);
+      if (slug === 'sweets') sweetGroups = groups;
+      else if (slug === 'savouries') savouryGroups = groups;
+    });
+
+    // Re-render the product sections with live data & current search filter
+    handleProductSearch();
+    if (typeof renderGiftBoxSweets === "function") {
+      renderGiftBoxSweets();
+    }
+  } catch (err) {
+    console.warn('Could not load products from API, page may show empty sections.', err);
   }
-];
+}
 
 const translations = {
   en: {
@@ -201,6 +115,9 @@ const translations = {
       eyebrow: "Signature Sweets",
       title: "Our Sweet Favourites",
       subtitle: "Made with slow-roasted flour, fragrant cardamom, premium nuts, and the unmistakable richness of traditional ghee."
+    },
+    search: {
+      placeholder: "Search sweets or savouries..."
     },
     savouries: {
       eyebrow: "Fresh Savouries",
@@ -324,6 +241,9 @@ const translations = {
       eyebrow: "பிரத்தியேக இனிப்புகள்",
       title: "எங்கள் சிறப்பு இனிப்புகள்",
       subtitle: "வறுத்த மாவு, ஏலக்காய், தரமான பருப்புகள் மற்றும் சுத்தமான நெய் கொண்டு செய்யப்பட்ட பாரம்பரிய இனிப்புகள்."
+    },
+    search: {
+      placeholder: "இனிப்புகள் அல்லது காரங்களைத் தேடுங்கள்..."
     },
     savouries: {
       eyebrow: "புதிய கார வகைகள்",
@@ -452,8 +372,11 @@ function createGroupedProductCard(product, sizes, addText) {
   media.className = "card-media";
 
   const image = document.createElement("img");
-  image.src = product.image;
+  image.src = product.image || "assets/no-image.svg";
   image.alt = currentLanguage === "en" ? product.nameEn : product.nameTa;
+  image.onerror = function() {
+    this.src = "assets/no-image.svg";
+  };
   media.appendChild(image);
 
   const content = document.createElement("div");
@@ -520,38 +443,104 @@ function createGroupedProductCard(product, sizes, addText) {
   return article;
 }
 
-function renderSweets(language = currentLanguage) {
-  if (!sweetsContainer) return;
+function matchProductSearch(product, searchQuery) {
+  if (!searchQuery) return true;
+  const q = searchQuery.toLowerCase().trim();
+  const nameEn = (product.nameEn || product.name_en || "").toLowerCase();
+  const nameTa = (product.nameTa || product.name_ta || "").toLowerCase();
+  const descEn = (product.descEn || product.desc_en || "").toLowerCase();
+  const descTa = (product.descTa || product.desc_ta || "").toLowerCase();
+  return nameEn.includes(q) || nameTa.includes(q) || descEn.includes(q) || descTa.includes(q);
+}
+
+function getProductSearchQuery() {
+  const input = document.getElementById("productSearchInput");
+  return input ? input.value.trim() : "";
+}
+
+function renderSweets(language = currentLanguage, searchQuery = getProductSearchQuery()) {
+  if (!sweetsContainer) return 0;
   const grid = document.createElement("div");
   grid.className = "menu-grid";
   const addText = language === "en" ? "Add to Cart" : "கூடையில் சேர்க்க";
+  let count = 0;
 
   sweetGroups.forEach((group) => {
     const sizes = language === "en" ? group.sizes : group.sizesTa;
     group.products.forEach((product) => {
-      grid.appendChild(createGroupedProductCard(product, sizes, addText));
+      if (matchProductSearch(product, searchQuery)) {
+        grid.appendChild(createGroupedProductCard(product, sizes, addText));
+        count++;
+      }
     });
   });
 
+  if (count === 0 && searchQuery) {
+    const noResultsMsg = language === "en" 
+      ? `No sweets found matching "${searchQuery}"`
+      : `"${searchQuery}" என்ற தேடலுக்கு இணையான இனிப்புகள் எதுவும் இல்லை`;
+    grid.innerHTML = `<div class="empty-state" style="grid-column:1/-1; padding:32px; text-align:center; color:var(--muted);"><i class="fa-solid fa-magnifying-glass" style="font-size:2rem; margin-bottom:10px; color:var(--saffron);"></i><p style="font-weight:500;">${noResultsMsg}</p></div>`;
+  }
+
   sweetsContainer.replaceChildren(grid);
   observeRevealElements(sweetsContainer);
+  return count;
 }
 
-function renderSavouries(language = currentLanguage) {
-  if (!savouriesContainer) return;
+function renderSavouries(language = currentLanguage, searchQuery = getProductSearchQuery()) {
+  if (!savouriesContainer) return 0;
   const grid = document.createElement("div");
   grid.className = "menu-grid";
   const addText = language === "en" ? "Add to Cart" : "கூடையில் சேர்க்க";
+  let count = 0;
 
   savouryGroups.forEach((group) => {
     const sizes = language === "en" ? group.sizes : group.sizesTa;
     group.products.forEach((product) => {
-      grid.appendChild(createGroupedProductCard(product, sizes, addText));
+      if (matchProductSearch(product, searchQuery)) {
+        grid.appendChild(createGroupedProductCard(product, sizes, addText));
+        count++;
+      }
     });
   });
 
+  if (count === 0 && searchQuery) {
+    const noResultsMsg = language === "en" 
+      ? `No savouries found matching "${searchQuery}"`
+      : `"${searchQuery}" என்ற தேடலுக்கு இணையான காரவண்டிகள் எதுவும் இல்லை`;
+    grid.innerHTML = `<div class="empty-state" style="grid-column:1/-1; padding:32px; text-align:center; color:var(--muted);"><i class="fa-solid fa-magnifying-glass" style="font-size:2rem; margin-bottom:10px; color:var(--saffron);"></i><p style="font-weight:500;">${noResultsMsg}</p></div>`;
+  }
+
   savouriesContainer.replaceChildren(grid);
   observeRevealElements(savouriesContainer);
+  return count;
+}
+
+function handleProductSearch() {
+  const input = document.getElementById("productSearchInput");
+  const clearBtn = document.getElementById("clearSearchBtn");
+  const countEl = document.getElementById("searchResultsCount");
+  
+  const query = getProductSearchQuery();
+  if (clearBtn) {
+    clearBtn.style.display = query ? "flex" : "none";
+  }
+
+  const sweetsCount = renderSweets(currentLanguage, query);
+  const savouriesCount = renderSavouries(currentLanguage, query);
+
+  if (countEl) {
+    if (query) {
+      const total = sweetsCount + savouriesCount;
+      const resultText = currentLanguage === "en"
+        ? `Found ${total} item${total !== 1 ? 's' : ''} for "${query}"`
+        : `"${query}" - ${total} பொருட்கள் கண்டறியப்பட்டன`;
+      countEl.textContent = resultText;
+      countEl.style.display = "block";
+    } else {
+      countEl.style.display = "none";
+    }
+  }
 }
 
 function applyTranslations(language) {
@@ -566,9 +555,11 @@ function applyTranslations(language) {
   document.querySelectorAll("[data-i18n-aria-label]").forEach((element) => {
     element.setAttribute("aria-label", getTranslation(element.dataset.i18nAriaLabel, language));
   });
+  document.querySelectorAll("[data-i18n-placeholder]").forEach((element) => {
+    element.placeholder = getTranslation(element.dataset.i18nPlaceholder, language);
+  });
 
-  renderSweets(language);
-  renderSavouries(language);
+  handleProductSearch();
   
   // Re-render gift box builder elements
   if (typeof renderGiftBoxSweets === "function") {
@@ -974,8 +965,10 @@ function showCheckoutPaymentStep() {
 }
 
 // Final Order Placement
-placeOrderBtn.addEventListener("click", () => {
-  
+placeOrderBtn.addEventListener("click", async () => {
+  placeOrderBtn.disabled = true;
+  placeOrderBtn.textContent = 'Processing...';
+
   // Generate Order ID (SRB-YYYYMMDD-XXXX)
   const now = new Date();
   const dateStr = now.getFullYear() + String(now.getMonth() + 1).padStart(2, '0') + String(now.getDate()).padStart(2, '0');
@@ -987,6 +980,31 @@ placeOrderBtn.addEventListener("click", () => {
   
   // Keep copy of cart items for receipt downloading
   checkoutData.items = [...cart];
+
+  // ── Save order to backend database ──────────────────────────────────────────
+  try {
+    const totalPrice = cart.reduce((sum, item) => sum + (item.priceVal || 0) * (item.quantity || 1), 0);
+    await fetch('/api/orders', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        customer_name: checkoutData.name,
+        phone_number: checkoutData.phone,
+        delivery_address: checkoutData.address,
+        delivery_date: checkoutData.deliveryDate,
+        time_slot: checkoutData.deliveryTimeSlot,
+        items: checkoutData.items,
+        total_price: totalPrice,
+        payment_method: 'Cash on Delivery'
+      })
+    });
+  } catch (err) {
+    console.warn('Could not save order to server:', err);
+    // Still continue — order receipt is shown regardless
+  }
+
+  placeOrderBtn.disabled = false;
+  placeOrderBtn.textContent = 'Place Order';
   
   // Generate Success screen and Receipt
   showCheckoutReceiptStep();
@@ -1328,6 +1346,7 @@ function getAvailableSweets() {
     
     group.products.forEach(prod => {
       if (prod.key === "mixedSweetBox") return;
+      if (prod.in_giftbox === 0) return; // Exclude sweets disabled for giftbox by admin
       sweets.push({
         key: prod.key,
         nameEn: prod.nameEn,
@@ -1714,5 +1733,35 @@ document.querySelector("#nextReview")?.addEventListener("click", () => {
   updateSliderPosition();
 });
 
+// Bind Product Search Bar Events
+const searchInput = document.getElementById("productSearchInput");
+const clearSearchBtn = document.getElementById("clearSearchBtn");
+
+if (searchInput) {
+  searchInput.addEventListener("input", handleProductSearch);
+}
+if (clearSearchBtn) {
+  clearSearchBtn.addEventListener("click", () => {
+    if (searchInput) {
+      searchInput.value = "";
+      handleProductSearch();
+      searchInput.focus();
+    }
+  });
+}
+
 // Initial translations run
 applyTranslations(currentLanguage);
+
+// Fetch live products from backend database & auto-sync admin updates live
+loadProductsFromAPI();
+
+// Automatically refresh products every 4 seconds to sync live admin edits
+setInterval(loadProductsFromAPI, 4000);
+
+document.addEventListener("visibilitychange", () => {
+  if (document.visibilityState === "visible") {
+    loadProductsFromAPI();
+  }
+});
+

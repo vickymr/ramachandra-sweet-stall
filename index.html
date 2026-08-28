@@ -80,43 +80,28 @@
           <span><i class="fa-solid fa-gift" aria-hidden="true"></i><span data-i18n="hero.highlightGift">Festival gift boxes</span></span>
         </div>
       </div>
+    <!-- Search Bar Section -->
+    <section class="section search-section reveal" id="search-section">
+      <div class="container">
+        <div class="search-bar-wrap">
+          <i class="fa-solid fa-magnifying-glass search-icon" aria-hidden="true"></i>
+          <input type="text" id="productSearchInput" class="search-input" placeholder="Search sweets or savouries..." data-i18n-placeholder="search.placeholder" autocomplete="off">
+          <button type="button" id="clearSearchBtn" class="clear-search-btn" style="display:none;" title="Clear search">
+            <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+          </button>
+        </div>
+        <div id="searchResultsCount" class="search-results-count" style="display:none;"></div>
+      </div>
     </section>
 
-    <!-- How to Order Section -->
-    <section class="section order-guide-section reveal" id="how-to-order">
-      <div class="container">
-        <div class="section-heading reveal">
-          <p class="eyebrow" data-i18n="guide.tag">Ordering Process</p>
-          <h2 data-i18n="guide.title">How to Place Your Order</h2>
-          <p data-i18n="guide.subtitle">Simple 4-step process to get fresh sweets delivered to your door</p>
-        </div>
-        <div class="guide-grid">
-          <div class="guide-card">
-            <div class="guide-step-number">1</div>
-            <i class="fa-solid fa-cart-plus guide-icon" aria-hidden="true"></i>
-            <h3 data-i18n="guide.step1.title">Browse & Add to Cart</h3>
-            <p data-i18n="guide.step1.desc">Explore our sweets and savouries. Choose your size (250g, 500g, 1kg) and add to cart.</p>
-          </div>
-          <div class="guide-card">
-            <div class="guide-step-number">2</div>
-            <i class="fa-solid fa-address-card guide-icon" aria-hidden="true"></i>
-            <h3 data-i18n="guide.step2.title">Provide Delivery Details</h3>
-            <p data-i18n="guide.step2.desc">Click checkout inside your basket, fill in your name, WhatsApp number, and delivery address.</p>
-          </div>
-          <div class="guide-card">
-            <div class="guide-step-number">3</div>
-            <i class="fa-solid fa-file-pdf guide-icon" aria-hidden="true"></i>
-            <h3 data-i18n="guide.step3.title">Get PDF Receipt</h3>
-            <p data-i18n="guide.step3.desc">Confirm details and place order. Your official PDF order receipt will download automatically.</p>
-          </div>
-          <div class="guide-card">
-            <div class="guide-step-number">4</div>
-            <i class="fa-solid fa-paper-plane guide-icon" aria-hidden="true"></i>
-            <h3 data-i18n="guide.step4.title">WhatsApp Confirmation</h3>
-            <p data-i18n="guide.step4.desc">Click "Open WhatsApp to Confirm" to send the order details text directly to the store owner.</p>
-          </div>
-        </div>
+    <!-- Signature Sweets Section -->
+    <section class="section menu-section" id="sweets">
+      <div class="section-heading reveal">
+        <p class="eyebrow" data-i18n="sweets.eyebrow">Signature Sweets</p>
+        <h2 data-i18n="sweets.title">Our Sweet Favourites</h2>
+        <p data-i18n="sweets.subtitle">Made with slow-roasted flour, fragrant cardamom, premium nuts, and the unmistakable richness of traditional ghee.</p>
       </div>
+      <div class="savouries-container" id="sweetsContainer"></div>
     </section>
 
     <!-- Custom Gift Box Builder Section -->
@@ -171,6 +156,7 @@
       </div>
     </section>
 
+    <!-- Savouries Section -->
     <section class="section menu-section" id="savouries">
       <div class="section-heading reveal">
         <p class="eyebrow" data-i18n="savouries.eyebrow">Fresh Savouries</p>
@@ -180,13 +166,41 @@
       <div class="savouries-container" id="savouriesContainer"></div>
     </section>
 
-    <section class="section menu-section" id="sweets">
-      <div class="section-heading reveal">
-        <p class="eyebrow" data-i18n="sweets.eyebrow">Signature Sweets</p>
-        <h2 data-i18n="sweets.title">Our Sweet Favourites</h2>
-        <p data-i18n="sweets.subtitle">Made with slow-roasted flour, fragrant cardamom, premium nuts, and the unmistakable richness of traditional ghee.</p>
+    <!-- How to Order Section -->
+    <section class="section order-guide-section reveal" id="how-to-order">
+      <div class="container">
+        <div class="section-heading reveal">
+          <p class="eyebrow" data-i18n="guide.tag">Ordering Process</p>
+          <h2 data-i18n="guide.title">How to Place Your Order</h2>
+          <p data-i18n="guide.subtitle">Simple 4-step process to get fresh sweets delivered to your door</p>
+        </div>
+        <div class="guide-grid">
+          <div class="guide-card">
+            <div class="guide-step-number">1</div>
+            <i class="fa-solid fa-cart-plus guide-icon" aria-hidden="true"></i>
+            <h3 data-i18n="guide.step1.title">Browse & Add to Cart</h3>
+            <p data-i18n="guide.step1.desc">Explore our sweets and savouries. Choose your size (250g, 500g, 1kg) and add to cart.</p>
+          </div>
+          <div class="guide-card">
+            <div class="guide-step-number">2</div>
+            <i class="fa-solid fa-address-card guide-icon" aria-hidden="true"></i>
+            <h3 data-i18n="guide.step2.title">Provide Delivery Details</h3>
+            <p data-i18n="guide.step2.desc">Click checkout inside your basket, fill in your name, WhatsApp number, and delivery address.</p>
+          </div>
+          <div class="guide-card">
+            <div class="guide-step-number">3</div>
+            <i class="fa-solid fa-file-pdf guide-icon" aria-hidden="true"></i>
+            <h3 data-i18n="guide.step3.title">Get PDF Receipt</h3>
+            <p data-i18n="guide.step3.desc">Confirm details and place order. Your official PDF order receipt will download automatically.</p>
+          </div>
+          <div class="guide-card">
+            <div class="guide-step-number">4</div>
+            <i class="fa-solid fa-paper-plane guide-icon" aria-hidden="true"></i>
+            <h3 data-i18n="guide.step4.title">WhatsApp Confirmation</h3>
+            <p data-i18n="guide.step4.desc">Click "Open WhatsApp to Confirm" to send the order details text directly to the store owner.</p>
+          </div>
+        </div>
       </div>
-      <div class="savouries-container" id="sweetsContainer"></div>
     </section>
 
     <section class="section about-section" id="about">

@@ -88,6 +88,7 @@ body.dark-mode .btn-mix:hover {
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: calc(var(--header-height, 82px) + 12px);
 }
 
 body {
@@ -96,6 +97,11 @@ body {
   color: var(--charcoal);
   font-family: "Poppins", "Noto Sans Tamil", system-ui, sans-serif;
   line-height: 1.6;
+  overflow-x: hidden;
+}
+
+section[id] {
+  scroll-margin-top: calc(var(--header-height, 82px) + 16px);
 }
 
 body.is-locked {
@@ -246,6 +252,75 @@ a {
   font-weight: 700;
   box-shadow: 0 10px 24px rgba(34, 32, 29, 0.16);
   transition: transform 220ms ease, box-shadow 220ms ease, background 220ms ease;
+}
+
+/* ─── Search Bar ─── */
+.search-section {
+  padding: 30px 0 10px 0;
+}
+
+.search-bar-wrap {
+  position: relative;
+  max-width: 600px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+}
+
+.search-icon {
+  position: absolute;
+  left: 20px;
+  color: var(--saffron);
+  font-size: 1.1rem;
+  pointer-events: none;
+}
+
+.search-input {
+  width: 100%;
+  padding: 14px 45px 14px 50px;
+  border: 2px solid #E6D7C3;
+  border-radius: 50px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 1rem;
+  background: var(--ivory);
+  color: var(--dark);
+  box-shadow: 0 4px 15px rgba(243, 112, 33, 0.08);
+  transition: all 0.3s ease;
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: var(--saffron);
+  box-shadow: 0 6px 20px rgba(243, 112, 33, 0.18);
+  background: #FFFFFF;
+}
+
+.clear-search-btn {
+  position: absolute;
+  right: 16px;
+  background: none;
+  border: none;
+  color: #9A8070;
+  font-size: 1.1rem;
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s ease;
+}
+
+.clear-search-btn:hover {
+  color: var(--saffron);
+}
+
+.search-results-count {
+  text-align: center;
+  margin-top: 12px;
+  font-size: 0.95rem;
+  color: var(--saffron);
+  font-weight: 600;
 }
 
 .language-toggle:hover,

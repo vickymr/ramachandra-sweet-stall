@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard — Sri Ramachandra Sweets & Bakery</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <link rel="stylesheet" href="/admin/admin.css">
+</head>
+<body>
+  <!-- Sidebar -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand">
+      <div class="brand-icon"><i class="fa-solid fa-store"></i></div>
+      <div>
+        <div class="brand-name">Ramachandra</div>
+        <div class="brand-sub">Admin Portal</div>
+      </div>
+    </div>
+    <nav class="sidebar-nav">
+      <a href="#" class="nav-item active" data-section="dashboard" id="nav-dashboard">
+        <i class="fa-solid fa-gauge-high"></i><span>Dashboard</span>
+      </a>
+      <a href="#" class="nav-item" data-section="products" id="nav-products">
+        <i class="fa-solid fa-candy-cane"></i><span>Products</span>
+      </a>
+      <a href="#" class="nav-item" data-section="orders" id="nav-orders">
+        <i class="fa-solid fa-bag-shopping"></i><span>Orders</span>
+        <span class="nav-badge" id="pendingBadge" style="display:none">0</span>
+      </a>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="admin-info">
+        <i class="fa-solid fa-user-shield"></i>
+        <span id="adminUsernameDisplay">admin</span>
+      </div>
+      <button class="btn-logout" id="logoutBtn"><i class="fa-solid fa-right-from-bracket"></i> Logout</button>
+    </div>
+  </aside>
+
+  <!-- Mobile overlay -->
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+  <!-- Main Content -->
+  <div class="main-content">
+    <!-- Top bar -->
+    <header class="topbar">
+      <button class="menu-toggle-btn" id="menuToggleBtn"><i class="fa-solid fa-bars"></i></button>
+      <div class="topbar-title" id="topbarTitle">Dashboard</div>
+      <div class="topbar-actions">
+        <button class="btn-save-publish" onclick="publishChanges()"><i class="fa-solid fa-floppy-disk"></i> Save & Publish Changes</button>
+        <a href="/" target="_blank" class="btn-view-site"><i class="fa-solid fa-eye"></i> View Site</a>
+      </div>
+    </header>
+
+    <!-- ── DASHBOARD SECTION ── -->
+    <section class="section-content" id="section-dashboard">
+      <div class="page-header">
+        <h1>Dashboard</h1>
+        <p>Welcome back! Here's an overview of your store.</p>
+      </div>
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon" style="background:rgba(243,112,33,0.12);color:#F37021"><i class="fa-solid fa-candy-cane"></i></div>
+          <div class="stat-info"><div class="stat-number" id="statTotalProducts">—</div><div class="stat-label">Total Products</div></div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon" style="background:rgba(34,197,94,0.12);color:#16a34a"><i class="fa-solid fa-circle-check"></i></div>
+          <div class="stat-info"><div class="stat-number" id="statActiveProducts">—</div><div class="stat-label">Active Products</div></div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon" style="background:rgba(59,130,246,0.12);color:#2563eb"><i class="fa-solid fa-bag-shopping"></i></div>
+          <div class="stat-info"><div class="stat-number" id="statTotalOrders">—</div><div class="stat-label">Total Orders</div></div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon" style="background:rgba(234,179,8,0.12);color:#ca8a04"><i class="fa-solid fa-clock"></i></div>
+          <div class="stat-info"><div class="stat-number" id="statPendingOrders">—</div><div class="stat-label">Pending Orders</div></div>
+        </div>
+      </div>
+      <div class="recent-orders-card">
+        <div class="card-header-row">
+          <h2>Recent Orders</h2>
+          <button class="btn-text" onclick="showSection('orders')">View All →</button>
+        </div>
+        <div id="recentOrdersTable"></div>
+      </div>
+    </section>
+
+    <!-- ── PRODUCTS SECTION ── -->
+    <section class="section-content hidden" id="section-products">
+      <div class="page-header">
+        <div>
+          <h1>Products</h1>
+          <p>Manage your sweets and savouries.</p>
+        </div>
+        <div class="header-actions">
+          <div class="lang-toggle-wrap">
+            <span class="lang-label">Language:</span>
+            <button class="btn-lang active" id="btnLangEn" onclick="setAdminLang('en')">EN</button>
+            <button class="btn-lang" id="btnLangTa" onclick="setAdminLang('ta')">தமிழ்</button>
+          </div>
+          <button class="btn-save-publish" onclick="publishChanges()"><i class="fa-solid fa-floppy-disk"></i> Save & Publish Changes</button>
+          <button class="btn-primary" id="addProductBtn"><i class="fa-solid fa-plus"></i> Add Product</button>
+        </div>
+      </div>
+
+      <!-- Category filter tabs -->
+      <div class="filter-tabs">
+        <button class="filter-tab active" data-filter="all">All</button>
+        <button class="filter-tab" data-filter="sweets">🍬 Sweets</button>
+        <button class="filter-tab" data-filter="giftbox">🎁 Gift Box Sweets</button>
+        <button class="filter-tab" data-filter="savouries">🥨 Savouries</button>
+      </div>
+
+      <div class="products-grid" id="productsGrid">
+        <div class="loading-state"><i class="fa-solid fa-spinner fa-spin"></i> Loading products...</div>
+      </div>
+    </section>
+
+    <!-- ── ORDERS SECTION ── -->
+    <section class="section-content hidden" id="section-orders">
+      <div class="page-header">
+        <div>
+          <h1>Orders</h1>
+          <p>All WhatsApp orders placed by customers.</p>
+        </div>
+        <div class="header-actions">
+          <div class="date-filter-wrap" style="display:inline-flex; align-items:center; gap:6px;">
+            <input type="date" id="orderDateFilter" class="filter-select" title="Filter by date">
+            <button type="button" class="btn-secondary" id="clearDateBtn" style="display:none; padding:7px 12px; font-size:0.8rem;" title="Clear Date Filter">
+              <i class="fa-solid fa-xmark"></i> Clear Date
+            </button>
+          </div>
+          <select class="filter-select" id="orderStatusFilter">
+            <option value="all">All Statuses</option>
+            <option value="Pending">Pending</option>
+            <option value="Confirmed">Confirmed</option>
+            <option value="Delivered">Delivered</option>
+            <option value="Cancelled">Cancelled</option>
+          </select>
+          <button type="button" class="btn-primary" id="exportOrdersPdfBtn">
+            <i class="fa-solid fa-file-pdf"></i> Export PDF
+          </button>
+        </div>
+      </div>
+      <div class="table-wrap" id="ordersTableWrap">
+        <div class="loading-state"><i class="fa-solid fa-spinner fa-spin"></i> Loading orders...</div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ── ADD/EDIT PRODUCT MODAL ── -->
+  <div class="modal-overlay hidden" id="productModal">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h2 id="modalTitle">Add New Product</h2>
+        <button class="modal-close" id="modalClose"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <form id="productForm" class="modal-body">
+        <input type="hidden" id="productId">
+
+        <div class="form-row-2">
+          <div class="form-group">
+            <label>Name (English) *</label>
+            <input type="text" id="fNameEn" class="form-input" required placeholder="e.g. Mysore Pak">
+          </div>
+          <div class="form-group">
+            <label>பெயர் (Tamil)</label>
+            <input type="text" id="fNameTa" class="form-input" placeholder="e.g. மைசூர் பாக்">
+          </div>
+        </div>
+
+        <div class="form-row-2">
+          <div class="form-group">
+            <label>Category *</label>
+            <select id="fCategory" class="form-input" required>
+              <option value="">Select category</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Product Key (unique slug) *</label>
+            <input type="text" id="fKey" class="form-input" required placeholder="e.g. mysorePak">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Description (English)</label>
+          <textarea id="fDescEn" class="form-input" rows="2" placeholder="English description..."></textarea>
+        </div>
+        <div class="form-group">
+          <label>விளக்கம் (Tamil)</label>
+          <textarea id="fDescTa" class="form-input" rows="2" placeholder="Tamil description..."></textarea>
+        </div>
+
+        <!-- Image Upload -->
+        <div class="form-group">
+          <label>Product Image</label>
+          <div class="image-upload-area" id="imageUploadArea">
+            <img id="imagePreview" src="" alt="" style="display:none; max-height:120px; border-radius:8px; margin-bottom:8px;">
+            <div id="imageUploadPrompt">
+              <i class="fa-solid fa-cloud-arrow-up"></i>
+              <span>Click to upload image</span>
+              <small>JPG, PNG, WEBP — max 5MB</small>
+            </div>
+            <input type="file" id="fImage" accept="image/*" style="display:none">
+          </div>
+        </div>
+
+        <!-- Custom Sizes -->
+        <div class="form-group">
+          <div class="sizes-header">
+            <label>Custom Sizes & Prices</label>
+            <button type="button" class="btn-add-size" id="addSizeBtn"><i class="fa-solid fa-plus"></i> Add Size</button>
+          </div>
+          <div id="sizesContainer" class="sizes-list"></div>
+        </div>
+
+        <div class="form-group" style="display:flex; gap:20px; flex-wrap:wrap;">
+          <label class="checkbox-label">
+            <input type="checkbox" id="fActive" checked>
+            <span>Active (visible to customers)</span>
+          </label>
+          <label class="checkbox-label">
+            <input type="checkbox" id="fInGiftbox" checked>
+            <span>🎁 Include in "Build Your Assorted Gift Box"</span>
+          </label>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn-secondary" id="modalCancelBtn">Cancel</button>
+          <button type="submit" class="btn-primary" id="modalSaveBtn">
+            <i class="fa-solid fa-floppy-disk"></i> Save Product
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ── ORDER DETAIL MODAL ── -->
+  <div class="modal-overlay hidden" id="orderModal">
+    <div class="modal-box modal-box-lg">
+      <div class="modal-header">
+        <h2 id="orderModalTitle">Order Details</h2>
+        <button class="modal-close" id="orderModalClose"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="modal-body" id="orderModalBody"></div>
+    </div>
+  </div>
+
+  <!-- ── CONFIRM DELETE MODAL ── -->
+  <div class="modal-overlay hidden" id="confirmModal">
+    <div class="modal-box modal-box-sm">
+      <div class="modal-header">
+        <h2>Confirm Delete</h2>
+        <button class="modal-close" id="confirmModalClose"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="modal-body" style="text-align:center; padding:24px 32px;">
+        <div style="font-size:3rem; margin-bottom:16px;">🗑️</div>
+        <p style="font-size:1rem; color:#4a3728; margin-bottom:8px;" id="confirmText">Are you sure you want to delete this item?</p>
+        <p style="font-size:0.82rem; color:#9a8070;">This action cannot be undone.</p>
+        <div style="display:flex; gap:12px; justify-content:center; margin-top:28px;">
+          <button class="btn-secondary" id="confirmCancelBtn">Cancel</button>
+          <button class="btn-danger" id="confirmOkBtn">Yes, Delete</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast notification -->
+  <div class="toast" id="toast"></div>
+
+  <!-- PDF Export Libraries -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+  <script src="/admin/admin.js"></script>
+</body>
+</html>
