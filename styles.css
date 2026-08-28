@@ -1796,7 +1796,29 @@ body.dark-mode select.form-input {
 
 @media (max-width: 580px) {
   .checkout-dialog {
-    padding: 35px 20px 24px;
+    width: calc(100% - 20px) !important;
+    padding: 24px 16px 20px !important;
+    max-height: 90vh !important;
+    border-radius: 16px !important;
+    margin: auto !important;
+  }
+  .checkout-title {
+    font-size: 1.25rem !important;
+    line-height: 1.35 !important;
+    margin-bottom: 16px !important;
+  }
+  .form-group {
+    gap: 4px !important;
+  }
+  .form-group label {
+    font-size: 0.86rem !important;
+  }
+  .form-input {
+    padding: 10px 12px !important;
+    font-size: 16px !important; /* Prevents auto-zoom on iOS Safari */
+  }
+  textarea.form-input {
+    min-height: 64px !important;
   }
   .payment-options {
     grid-template-columns: 1fr;
@@ -1813,10 +1835,6 @@ body.dark-mode select.form-input {
   .receipt-table-item {
     grid-template-columns: 1.5fr 1fr 1fr;
     font-size: 0.85rem;
-  }
-  .checkout-title {
-    font-size: 1.5rem;
-    margin-bottom: 20px;
   }
   .upi-payment-details {
     padding: 16px 12px;

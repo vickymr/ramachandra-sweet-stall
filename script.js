@@ -894,9 +894,9 @@ checkoutForm.addEventListener("submit", (e) => {
     custName.parentElement.classList.remove("has-error");
   }
   
-  // Validate phone (at least 10 digits)
+  // Validate phone (strictly 10 digits)
   const phoneVal = custWhatsApp.value.trim().replace(/\D/g, "");
-  if (phoneVal.length < 10) {
+  if (phoneVal.length !== 10) {
     custWhatsApp.parentElement.classList.add("has-error");
     isValid = false;
   } else {
@@ -940,6 +940,13 @@ checkoutForm.addEventListener("submit", (e) => {
   showCheckoutPaymentStep();
 });
 
+// Enforce 10-digit max length on phone input in real-time
+if (custWhatsApp) {
+  custWhatsApp.addEventListener("input", (e) => {
+    e.target.value = e.target.value.replace(/\D/g, "").slice(0, 10);
+  });
+}
+
 function showCheckoutPaymentStep() {
   stepForm.hidden = true;
   stepPayment.hidden = false;
@@ -965,10 +972,10 @@ function showCheckoutPaymentStep() {
   placeOrderBtn.disabled = false;
 }
 
-// Final Order Placement
+// Final Order Placement & WhatsApp Auto-Navigation
 placeOrderBtn.addEventListener("click", async () => {
   placeOrderBtn.disabled = true;
-  placeOrderBtn.textContent = 'Processing...';
+  placeOrderBtn.textContent = 'Opening WhatsApp...';
 
   // Generate Order ID (SRB-YYYYMMDD-XXXX)
   const now = new Date();
@@ -1001,13 +1008,39 @@ placeOrderBtn.addEventListener("click", async () => {
     });
   } catch (err) {
     console.warn('Could not save order to server:', err);
-    // Still continue — order receipt is shown regardless
   }
 
-  placeOrderBtn.disabled = false;
-  placeOrderBtn.textContent = 'Place Order';
+  // Construct WhatsApp Order Message for Store Owner (+91 96265 05520)
+  let message = `*NEW ORDER PLACED*\n`;
+  message += `*Order ID:* ${checkoutData.orderId}\n`;
+  message += `*Order Date:* ${checkoutData.orderDate}\n\n`;
+  message += `*Customer Name:* ${checkoutData.name}\n`;
+  message += `*Customer Phone:* +91 ${checkoutData.phone}\n`;
+  message += `*Delivery Address:* ${checkoutData.address}\n`;
+  message += `*Delivery Date:* ${checkoutData.deliveryDate}\n`;
+  message += `*Time Slot:* ${checkoutData.deliveryTimeSlot}\n\n`;
+  message += `*Ordered Items:*\n`;
   
-  // Generate Success screen and Receipt
+  let orderTotal = 0;
+  checkoutData.items.forEach((item, idx) => {
+    const itemTotal = item.priceVal * item.quantity;
+    orderTotal += itemTotal;
+    message += `${idx + 1}. ${item.name} (${item.size}) x ${item.quantity} - ₹${itemTotal}\n`;
+  });
+  
+  message += `\n*Total Amount:* ₹${orderTotal}\n`;
+  message += `*Payment Method:* Cash on Delivery (COD)\n\n`;
+  message += `Please confirm my order. Thank you!`;
+
+  const waUrl = `https://api.whatsapp.com/send?phone=919626505520&text=${encodeURIComponent(message)}`;
+
+  placeOrderBtn.disabled = false;
+  placeOrderBtn.textContent = 'Place Order via WhatsApp';
+
+  // Open WhatsApp automatically on customer's phone / device
+  window.location.href = waUrl;
+
+  // Show receipt screen in background
   showCheckoutReceiptStep();
 });
 

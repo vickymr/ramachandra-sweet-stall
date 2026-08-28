@@ -350,8 +350,8 @@
           </div>
           <div class="form-group">
             <label for="custWhatsApp">WhatsApp Phone Number / வாட்ஸ்அப் எண் *</label>
-            <input type="tel" id="custWhatsApp" class="form-input" required placeholder="Enter your phone number | உங்கள் தொலைபேசி எண்ணை உள்ளிடவும்">
-            <span class="error-msg" id="phoneError">Valid WhatsApp number required / தொலைபேசி எண்ணை உள்ளிடவும்</span>
+            <input type="tel" id="custWhatsApp" class="form-input" required maxlength="10" inputmode="numeric" pattern="[0-9]{10}" placeholder="10-digit phone number | 10 இலக்க தொலைபேசி எண்">
+            <span class="error-msg" id="phoneError">Please enter a valid 10-digit phone number / 10 இலக்க தொலைபேசி எண் தேவை</span>
           </div>
           <div class="form-group">
             <label for="custAddress">Complete Delivery Address / டெலிவரி முகவரி *</label>
