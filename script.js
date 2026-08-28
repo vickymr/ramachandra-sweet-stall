@@ -857,11 +857,24 @@ function openCheckout() {
   if (deliveryDate) deliveryDate.value = "";
   if (deliveryTimeSlot) deliveryTimeSlot.value = "";
   
-  // Set minimum date and default value to today
+  // Set delivery date: If order is placed after 5:00 PM (17:00), default & minimum date is tomorrow!
   if (deliveryDate) {
-    const today = new Date().toISOString().split('T')[0];
-    deliveryDate.setAttribute('min', today);
-    deliveryDate.value = today;
+    const now = new Date();
+    const currentHour = now.getHours();
+    let minDate = new Date();
+    
+    // If shop is closed or after 5 PM (17:00), minimum delivery date is tomorrow!
+    if (currentHour >= 17) {
+      minDate.setDate(minDate.getDate() + 1);
+    }
+    
+    const year = minDate.getFullYear();
+    const month = String(minDate.getMonth() + 1).padStart(2, '0');
+    const day = String(minDate.getDate()).padStart(2, '0');
+    const minDateStr = `${year}-${month}-${day}`;
+    
+    deliveryDate.setAttribute('min', minDateStr);
+    deliveryDate.value = minDateStr;
   }
   
   // Clear errors
@@ -878,6 +891,19 @@ function openCheckout() {
 function closeCheckout() {
   checkoutModal.hidden = true;
   document.body.classList.remove("is-locked");
+}
+
+// Ensure delivery date cannot be before minimum allowed date on change
+if (deliveryDate) {
+  deliveryDate.addEventListener("change", () => {
+    const minAllowed = deliveryDate.getAttribute("min");
+    if (minAllowed && deliveryDate.value < minAllowed) {
+      deliveryDate.value = minAllowed;
+      deliveryDate.parentElement.classList.add("has-error");
+    } else {
+      deliveryDate.parentElement.classList.remove("has-error");
+    }
+  });
 }
 
 // Step 1: Submit Form details
@@ -911,12 +937,15 @@ checkoutForm.addEventListener("submit", (e) => {
     custAddress.parentElement.classList.remove("has-error");
   }
   
-  // Validate Delivery Date
-  if (deliveryDate && !deliveryDate.value) {
-    deliveryDate.parentElement.classList.add("has-error");
-    isValid = false;
-  } else if (deliveryDate) {
-    deliveryDate.parentElement.classList.remove("has-error");
+  // Validate Delivery Date (Must be selected and on/after minimum allowed date)
+  if (deliveryDate) {
+    const minAllowed = deliveryDate.getAttribute("min");
+    if (!deliveryDate.value || (minAllowed && deliveryDate.value < minAllowed)) {
+      deliveryDate.parentElement.classList.add("has-error");
+      isValid = false;
+    } else {
+      deliveryDate.parentElement.classList.remove("has-error");
+    }
   }
   
   // Validate Time Slot
