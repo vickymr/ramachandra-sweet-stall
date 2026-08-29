@@ -206,6 +206,18 @@ router.post('/admin/:id/image', verifyToken, upload.single('image'), async (req,
     const { id } = req.params;
     if (!req.file) return res.status(400).json({ error: 'No image file provided.' });
 
+    // Fetch existing product to clean up old uploaded image if it was a custom file
+    const oldProduct = await db.get('SELECT image FROM products WHERE id = ?', [id]);
+    if (oldProduct && oldProduct.image) {
+      const isCustomFile = /assets\/\d+_/.test(oldProduct.image);
+      if (isCustomFile) {
+        const oldFilePath = path.join(__dirname, '..', oldProduct.image);
+        if (fs.existsSync(oldFilePath)) {
+          try { fs.unlinkSync(oldFilePath); } catch (e) { console.warn('Could not delete old image:', e.message); }
+        }
+      }
+    }
+
     const imagePath = 'assets/' + req.file.filename;
     await db.run('UPDATE products SET image = ? WHERE id = ?', [imagePath, id]);
     res.json({ success: true, image: imagePath });

@@ -310,12 +310,13 @@ document.getElementById('productForm').addEventListener('submit', async (e) => {
   body.sizes = sizes;
 
   let res;
+  let savedId = id ? parseInt(id) : null;
+
   if (id) {
     // Update product details
     res = await api('PUT', `/api/products/admin/${id}`, body);
     if (res.ok) {
       // Sync sizes: delete all old sizes then re-add
-      // Get current sizes from product
       const product = allProducts.find(p => p.id === parseInt(id));
       if (product && product.sizes) {
         for (const s of product.sizes) {
@@ -330,33 +331,38 @@ document.getElementById('productForm').addEventListener('submit', async (e) => {
     res = await api('POST', '/api/products/admin', body);
     if (res.ok) {
       const data = await res.json();
-      // sizes already inserted by server on creation
+      savedId = data?.product?.id || null;
     }
   }
 
   // Upload image if selected
   const imageFile = document.getElementById('fImage').files[0];
-  if (imageFile && res.ok) {
-    const savedId = id || (await res.json().catch(() => null))?.product?.id;
-    if (savedId) {
-      const formData = new FormData();
-      formData.append('image', imageFile);
-      await fetch(`/api/products/admin/${savedId}/image`, {
-        method: 'POST',
-        headers: { 'Authorization': `Bearer ${token}` },
-        body: formData
-      });
+  let imageUploadSuccess = true;
+  let imageErrorMessage = '';
+
+  if (imageFile && res.ok && savedId) {
+    const formData = new FormData();
+    formData.append('image', imageFile);
+    const imgRes = await fetch(`/api/products/admin/${savedId}/image`, {
+      method: 'POST',
+      headers: { 'Authorization': `Bearer ${token}` },
+      body: formData
+    });
+    if (!imgRes.ok) {
+      imageUploadSuccess = false;
+      const imgErr = await imgRes.json().catch(() => ({}));
+      imageErrorMessage = imgErr.error || 'Image upload failed';
     }
   }
 
   btn.disabled = false;
-  if (res.ok) {
+  if (res.ok && imageUploadSuccess) {
     closeProductModal();
     await loadProducts();
     updateDashboardStats();
     toast(id ? 'Product updated successfully!' : 'Product added successfully!');
   } else {
-    const err = await res.json().catch(() => ({}));
+    const err = res.ok ? { error: imageErrorMessage } : await res.json().catch(() => ({}));
     toast(err.error || 'Failed to save product.', 'error');
     btn.innerHTML = id ? '<i class="fa-solid fa-floppy-disk"></i> Save Changes' : '<i class="fa-solid fa-plus"></i> Add Product';
   }
