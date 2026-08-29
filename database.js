@@ -16,10 +16,25 @@ if (process.env.TURSO_DATABASE_URL) {
   console.log('Connected to local SQLite database');
 }
 
+// Libsql client throws on undefined; convert undefined to null for SQL compatibility
+function sanitizeParams(params) {
+  if (!Array.isArray(params)) return params;
+  return params.map(p => (p === undefined ? null : p));
+}
+
 const db = {
-  async get(sql, params = []) { const r = await client.execute({ sql, args: params }); return r.rows[0] || undefined; },
-  async all(sql, params = []) { const r = await client.execute({ sql, args: params }); return r.rows || []; },
-  async run(sql, params = []) { const r = await client.execute({ sql, args: params }); return { lastID: Number(r.lastInsertRowid), changes: r.rowsAffected }; },
+  async get(sql, params = []) { 
+    const r = await client.execute({ sql, args: sanitizeParams(params) }); 
+    return r.rows[0] || undefined; 
+  },
+  async all(sql, params = []) { 
+    const r = await client.execute({ sql, args: sanitizeParams(params) }); 
+    return r.rows || []; 
+  },
+  async run(sql, params = []) { 
+    const r = await client.execute({ sql, args: sanitizeParams(params) }); 
+    return { lastID: Number(r.lastInsertRowid), changes: r.rowsAffected }; 
+  },
   async exec(sql) {
     const stmts = sql.split(';').map(s => s.trim()).filter(s => s.length > 0).map(s => ({ sql: s, args: [] }));
     if (stmts.length > 0) await client.batch(stmts, 'write');
@@ -45,7 +60,6 @@ async function initDb() {
   }
 
   // Check if initial seeding was already done.
-  // If categories already exist, do NOT re-seed or resurrect deleted products!
   const hasSeeded = await db.get('SELECT id FROM categories LIMIT 1');
   if (hasSeeded) {
     console.log('Database already initialized. Preserving all user deletions & edits.');
