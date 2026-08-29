@@ -23,15 +23,25 @@ app.use('/api', (req, res, next) => {
 });
 
 // ─── Serve Static Files ───────────────────────────────────────────────────────
-// Serve the main project directory (customer website + assets)
+// Serve the main project directory (customer website + bundled assets)
 app.use(express.static(path.join(__dirname), {
-  setHeaders: (res, path) => {
-    // Disable caching for images in assets directory so image updates reflect immediately
-    if (path.includes('/assets/') || path.includes('\\assets\\')) {
+  setHeaders: (res, filePath) => {
+    if (filePath.includes('/assets/') || filePath.includes('\\assets\\')) {
       res.setHeader('Cache-Control', 'public, max-age=0, must-revalidate');
     }
   }
 }));
+
+// On Render.com: also serve uploaded images from the Persistent Disk (/data/assets)
+// so that product images uploaded via admin panel survive server restarts
+if (process.env.ASSETS_PATH) {
+  app.use('/assets', express.static(process.env.ASSETS_PATH, {
+    setHeaders: (res) => {
+      res.setHeader('Cache-Control', 'public, max-age=0, must-revalidate');
+    }
+  }));
+}
+
 
 // ─── API Routes ───────────────────────────────────────────────────────────────
 const authRoutes = require('./routes/authRoutes');

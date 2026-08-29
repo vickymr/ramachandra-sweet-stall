@@ -10,10 +10,13 @@ const router = express.Router();
 // ─── Multer Setup for Image Uploads ──────────────────────────────────────────
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    const uploadDir = path.join(__dirname, '..', 'assets');
+    // On Render.com: set env var ASSETS_PATH=/data/assets (Persistent Disk)
+    // Locally: falls back to assets/ folder in project root
+    const uploadDir = process.env.ASSETS_PATH || path.join(__dirname, '..', 'assets');
     if (!fs.existsSync(uploadDir)) fs.mkdirSync(uploadDir, { recursive: true });
     cb(null, uploadDir);
   },
+
   filename: (req, file, cb) => {
     const ext = path.extname(file.originalname).toLowerCase();
     const safeName = file.originalname.replace(/[^a-zA-Z0-9.\-_]/g, '_');

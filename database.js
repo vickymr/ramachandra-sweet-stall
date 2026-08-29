@@ -3,12 +3,17 @@ const bcrypt = require('bcryptjs');
 const path = require('path');
 const fs = require('fs');
 
-// Ensure db directory exists
-const dbDir = path.join(__dirname, 'db');
+// ── Database Path ─────────────────────────────────────────────────────────────
+// On Render.com: set env var DB_PATH=/data/ramachandra.db (Persistent Disk)
+// Locally: falls back to db/ramachandra.db
+const dbPath = process.env.DB_PATH || path.join(__dirname, 'db', 'ramachandra.db');
+
+// Ensure the directory for the DB file exists
+const dbDir = path.dirname(dbPath);
 if (!fs.existsSync(dbDir)) fs.mkdirSync(dbDir, { recursive: true });
 
-const dbPath = path.join(dbDir, 'ramachandra.db');
 const rawDb = new sqlite3.Database(dbPath);
+
 
 // Expose Promise-based helper methods
 const db = {
