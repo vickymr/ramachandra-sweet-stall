@@ -93,12 +93,23 @@ router.get('/admin', verifyToken, async (req, res) => {
 // POST /api/admin/products — add new product
 router.post('/admin', verifyToken, async (req, res) => {
   try {
-    const { key, category_id, name_en, name_ta, desc_en, desc_ta, image, is_active, in_giftbox, sort_order, sizes } = req.body;
-    if (!key || !category_id || !name_en)
-      return res.status(400).json({ error: 'key, category_id, and name_en are required.' });
+    let { key, category_id, name_en, name_ta, desc_en, desc_ta, image, is_active, in_giftbox, sort_order, sizes } = req.body;
+    if (!name_en || !category_id)
+      return res.status(400).json({ error: 'Category and Product Name (English) are required.' });
 
+    // Auto-generate key if empty or whitespace
+    if (!key || !key.trim()) {
+      const cleanName = name_en.replace(/[^a-zA-Z0-9]/g, '');
+      key = (cleanName || 'product') + '_' + Date.now().toString(36);
+    } else {
+      key = key.trim();
+    }
+
+    // If key already exists in DB, make it unique instead of failing
     const existing = await db.get('SELECT id FROM products WHERE key = ?', [key]);
-    if (existing) return res.status(409).json({ error: 'Product key already exists.' });
+    if (existing) {
+      key = `${key}_${Date.now().toString(36)}`;
+    }
 
     const result = await db.run(`
       INSERT INTO products (key, category_id, name_en, name_ta, desc_en, desc_ta, image, is_active, in_giftbox, sort_order)
