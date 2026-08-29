@@ -16,12 +16,14 @@ let pendingDeleteType = null; // 'product' | 'order'
 
 // ─── API Helper ───────────────────────────────────────────────────────────────
 async function api(method, url, body = null) {
+  const cacheBustUrl = method === 'GET' ? (url.includes('?') ? `${url}&_t=${Date.now()}` : `${url}?_t=${Date.now()}`) : url;
   const opts = {
     method,
-    headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' }
+    headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json', 'Cache-Control': 'no-cache', 'Pragma': 'no-cache' },
+    cache: 'no-store'
   };
   if (body) opts.body = JSON.stringify(body);
-  const res = await fetch(url, opts);
+  const res = await fetch(cacheBustUrl, opts);
   if (res.status === 401) { localStorage.clear(); window.location.href = '/admin/login'; }
   return res;
 }

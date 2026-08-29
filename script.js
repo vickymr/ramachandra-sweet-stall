@@ -41,10 +41,14 @@ function apiDataToGroups(products) {
 }
 
 let previousProductsJson = "";
+let lastProductUpdateTime = Date.now();
 
 async function loadProductsFromAPI() {
   try {
-    const res = await fetch('/api/products');
+    const res = await fetch(`/api/products?_t=${Date.now()}`, {
+      cache: 'no-store',
+      headers: { 'Cache-Control': 'no-cache', 'Pragma': 'no-cache' }
+    });
     if (!res.ok) throw new Error('Failed to fetch products');
     const data = await res.json(); // [{category, products}, ...]
 
@@ -53,6 +57,7 @@ async function loadProductsFromAPI() {
       return; // Skip DOM re-render if data has not changed to keep scroll silky smooth!
     }
     previousProductsJson = jsonStr;
+    lastProductUpdateTime = Date.now();
 
     sweetGroups = [];
     savouryGroups = [];
@@ -372,7 +377,8 @@ function createGroupedProductCard(product, sizes, addText) {
   media.className = "card-media";
 
   const image = document.createElement("img");
-  image.src = product.image || "assets/no-image.svg";
+  const baseImg = product.image || "assets/no-image.svg";
+  image.src = baseImg.includes('?') ? baseImg : `${baseImg}?v=${lastProductUpdateTime}`;
   image.alt = currentLanguage === "en" ? product.nameEn : product.nameTa;
   image.onerror = function() {
     this.src = "assets/no-image.svg";
@@ -1438,8 +1444,9 @@ function renderGiftBoxSweets() {
       e.dataTransfer.setData("text/plain", sweet.key);
       e.dataTransfer.effectAllowed = "move";
     });
+    const sweetImg = sweet.image ? (sweet.image.includes('?') ? sweet.image : `${sweet.image}?v=${lastProductUpdateTime}`) : 'assets/no-image.svg';
     card.innerHTML = `
-      <img src="${sweet.image}" alt="${nameText}" class="mix-card-img">
+      <img src="${sweetImg}" alt="${nameText}" class="mix-card-img">
       <div class="mix-card-info">
         <h4>${nameText}</h4>
         <span class="price-tag">₹${sweet.pricePer100g} / 100g</span>

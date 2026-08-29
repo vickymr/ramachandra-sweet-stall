@@ -190,32 +190,11 @@ async function initDb() {
     }
   }
 
-  // ── Database Migration: Clean up shared / legacy image assignments ─────────────
-  const validRealImages = {
-    'boondhiLaddu': 'assets/laddu.jpeg',
-    'badusha': 'assets/Badusha.jpeg',
-    'mysorePak': 'assets/Mysore Pak.jpeg'
-  };
-
+  // ── Database Migration: Ensure valid fallback image paths without overwriting admin updates ─────
   const existingProductsInDb = await db.all('SELECT id, key, image FROM products');
   for (const p of existingProductsInDb) {
-    if (validRealImages[p.key]) {
-      // Ensure boondhiLaddu, badusha, and mysorePak have their real uploaded image path
-      if (p.image !== validRealImages[p.key] && !p.image.startsWith('assets/17') && !p.image.startsWith('assets/16')) {
-        await db.run('UPDATE products SET image = ? WHERE id = ?', [validRealImages[p.key], p.id]);
-      }
-    } else {
-      // For all other products: if they are using shared default image paths, reset to no-image.svg
-      const isSharedOrLegacy = !p.image ||
-        p.image.endsWith('.svg') ||
-        p.image === 'assets/laddu.jpeg' ||
-        p.image === 'assets/Mysore Pak.jpeg' ||
-        p.image === 'assets/Badusha.jpeg' ||
-        p.image === 'assets/hero-sweets.svg';
-
-      if (isSharedOrLegacy) {
-        await db.run('UPDATE products SET image = ? WHERE id = ?', ['assets/no-image.svg', p.id]);
-      }
+    if (!p.image) {
+      await db.run('UPDATE products SET image = ? WHERE id = ?', ['assets/no-image.svg', p.id]);
     }
   }
 

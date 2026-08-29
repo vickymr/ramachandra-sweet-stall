@@ -13,9 +13,25 @@ app.use(cors()); // Allow all origins (Local IP, Mobile, Localtunnel, etc.)
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// Prevent browser and proxy/CDN caching for all API endpoints
+app.use('/api', (req, res, next) => {
+  res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+  res.setHeader('Pragma', 'no-cache');
+  res.setHeader('Expires', '0');
+  res.setHeader('Surrogate-Control', 'no-store');
+  next();
+});
+
 // ─── Serve Static Files ───────────────────────────────────────────────────────
 // Serve the main project directory (customer website + assets)
-app.use(express.static(path.join(__dirname)));
+app.use(express.static(path.join(__dirname), {
+  setHeaders: (res, path) => {
+    // Disable caching for images in assets directory so image updates reflect immediately
+    if (path.includes('/assets/') || path.includes('\\assets\\')) {
+      res.setHeader('Cache-Control', 'public, max-age=0, must-revalidate');
+    }
+  }
+}));
 
 // ─── API Routes ───────────────────────────────────────────────────────────────
 const authRoutes = require('./routes/authRoutes');

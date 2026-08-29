@@ -39,6 +39,9 @@ async function getProductWithSizes(productId) {
 
 // GET /api/products — all active products grouped by category (for customer site)
 router.get('/', async (req, res) => {
+  res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+  res.setHeader('Pragma', 'no-cache');
+  res.setHeader('Expires', '0');
   try {
     const categories = await db.all('SELECT * FROM categories ORDER BY id');
     const result = [];
