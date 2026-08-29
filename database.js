@@ -36,6 +36,7 @@ async function initDb() {
   `);
   try { await db.exec('ALTER TABLE products ADD COLUMN in_giftbox INTEGER DEFAULT 1'); } catch(e) {}
 
+  // Seed Admin User if not exists
   const existingAdmin = await db.get('SELECT id FROM admin_users WHERE username = ?', ['admin']);
   if (!existingAdmin) {
     const hash = bcrypt.hashSync('admin@123', 10);
@@ -43,9 +44,17 @@ async function initDb() {
     console.log('Admin user created: admin / admin@123');
   }
 
+  // Check if initial seeding was already done.
+  // If categories already exist, do NOT re-seed or resurrect deleted products!
+  const hasSeeded = await db.get('SELECT id FROM categories LIMIT 1');
+  if (hasSeeded) {
+    console.log('Database already initialized. Preserving all user deletions & edits.');
+    return;
+  }
+
+  // First-time seed only:
   for (const cat of [{slug:'sweets',name_en:'Sweets',name_ta:'இனிப்புகள்'},{slug:'savouries',name_en:'Savouries',name_ta:'காரவண்டிகள்'}]) {
-    if (!await db.get('SELECT id FROM categories WHERE slug = ?', [cat.slug]))
-      await db.run('INSERT INTO categories (slug, name_en, name_ta) VALUES (?, ?, ?)', [cat.slug, cat.name_en, cat.name_ta]);
+    await db.run('INSERT INTO categories (slug, name_en, name_ta) VALUES (?, ?, ?)', [cat.slug, cat.name_en, cat.name_ta]);
   }
 
   const sw = (await db.get('SELECT id FROM categories WHERE slug = ?', ['sweets']))?.id;
@@ -85,21 +94,15 @@ async function initDb() {
   ];
 
   for (const p of seedProducts) {
-    if (!await db.get('SELECT id FROM products WHERE key = ?', [p.key])) {
-      const r = await db.run('INSERT INTO products (key, category_id, name_en, name_ta, desc_en, desc_ta, image, sort_order) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
-        [p.key, p.cid, p.en, p.ta, p.den, p.dta, p.img, p.so]);
-      for (let i = 0; i < p.sz.length; i++) {
-        const s = p.sz[i];
-        await db.run('INSERT INTO product_sizes (product_id, size_name, size_name_ta, price, sort_order) VALUES (?, ?, ?, ?, ?)', [r.lastID, s.n, s.nt, s.p, i]);
-      }
+    const r = await db.run('INSERT INTO products (key, category_id, name_en, name_ta, desc_en, desc_ta, image, sort_order) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
+      [p.key, p.cid, p.en, p.ta, p.den, p.dta, p.img, p.so]);
+    for (let i = 0; i < p.sz.length; i++) {
+      const s = p.sz[i];
+      await db.run('INSERT INTO product_sizes (product_id, size_name, size_name_ta, price, sort_order) VALUES (?, ?, ?, ?, ?)', [r.lastID, s.n, s.nt, s.p, i]);
     }
   }
 
-  const allProds = await db.all('SELECT id, image FROM products');
-  for (const p of allProds) {
-    if (!p.image) await db.run('UPDATE products SET image = ? WHERE id = ?', ['assets/no-image.svg', p.id]);
-  }
-  console.log('Database initialized and seeded successfully.');
+  console.log('Database initialized and initial seed completed.');
 }
 
 initDb().catch(err => console.error('Database init error:', err));
