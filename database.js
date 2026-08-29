@@ -1,4 +1,4 @@
-﻿const { createClient } = require('@libsql/client');
+const { createClient } = require('@libsql/client');
 const bcrypt = require('bcryptjs');
 const path = require('path');
 const fs = require('fs');
@@ -21,7 +21,7 @@ const db = {
   async all(sql, params = []) { const r = await client.execute({ sql, args: params }); return r.rows || []; },
   async run(sql, params = []) { const r = await client.execute({ sql, args: params }); return { lastID: Number(r.lastInsertRowid), changes: r.rowsAffected }; },
   async exec(sql) {
-    const stmts = sql.split(';').map(s => s.trim()).filter(s => s.length > 0).map(s => ({ sql: s }));
+    const stmts = sql.split(';').map(s => s.trim()).filter(s => s.length > 0).map(s => ({ sql: s, args: [] }));
     if (stmts.length > 0) await client.batch(stmts, 'write');
   }
 };
