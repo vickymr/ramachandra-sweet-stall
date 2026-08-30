@@ -30,6 +30,9 @@
         <i class="fa-solid fa-bag-shopping"></i><span>Orders</span>
         <span class="nav-badge" id="pendingBadge" style="display:none">0</span>
       </a>
+      <a href="#" class="nav-item" data-section="admins" id="nav-admins">
+        <i class="fa-solid fa-user-shield"></i><span>Admin Users</span>
+      </a>
     </nav>
     <div class="sidebar-footer">
       <div class="admin-info">
@@ -147,6 +150,43 @@
       </div>
       <div class="table-wrap" id="ordersTableWrap">
         <div class="loading-state"><i class="fa-solid fa-spinner fa-spin"></i> Loading orders...</div>
+      </div>
+    </section>
+
+    <!-- ── ADMIN USERS SECTION ── -->
+    <section class="section-content hidden" id="section-admins">
+      <div class="page-header">
+        <div>
+          <h1>Admin Users</h1>
+          <p>Manage who has access to this admin dashboard.</p>
+        </div>
+        <div class="header-actions">
+          <button class="btn-primary" id="addAdminBtn">
+            <i class="fa-solid fa-user-plus"></i> Add Admin
+          </button>
+        </div>
+      </div>
+
+      <!-- Add Admin Form (hidden by default) -->
+      <div id="addAdminForm" style="display:none; background:#fff8f0; border:1.5px solid #e8c99a; border-radius:12px; padding:24px 28px; margin-bottom:24px; max-width:480px;">
+        <h3 style="margin:0 0 16px; color:#4a3728; font-size:1rem;"><i class="fa-solid fa-user-plus"></i> New Admin Account</h3>
+        <div class="form-group" style="margin-bottom:14px;">
+          <label style="font-size:0.85rem; color:#6b5040; font-weight:600;">Username</label>
+          <input type="text" id="newAdminUsername" class="form-input" placeholder="e.g. manager1" autocomplete="off">
+        </div>
+        <div class="form-group" style="margin-bottom:20px;">
+          <label style="font-size:0.85rem; color:#6b5040; font-weight:600;">Password <span style="color:#999; font-weight:400;">(min 6 characters)</span></label>
+          <input type="password" id="newAdminPassword" class="form-input" placeholder="Enter password" autocomplete="new-password">
+        </div>
+        <div style="display:flex; gap:10px;">
+          <button class="btn-primary" id="saveAdminBtn"><i class="fa-solid fa-floppy-disk"></i> Create Admin</button>
+          <button class="btn-secondary" id="cancelAddAdminBtn">Cancel</button>
+        </div>
+      </div>
+
+      <!-- Admin Users Table -->
+      <div class="table-wrap" id="adminsTableWrap">
+        <div class="loading-state"><i class="fa-solid fa-spinner fa-spin"></i> Loading admins...</div>
       </div>
     </section>
   </div>

@@ -798,3 +798,113 @@ async function publishChanges() {
 
 // ─── Initialize ───────────────────────────────────────────────────────────────
 loadAll();
+
+// ─── ADMIN USERS MANAGEMENT ───────────────────────────────────────────────────
+async function loadAdmins() {
+  const wrap = document.getElementById('adminsTableWrap');
+  wrap.innerHTML = '<div class="loading-state"><i class="fa-solid fa-spinner fa-spin"></i> Loading admins...</div>';
+  try {
+    const res = await api('GET', '/api/auth/admins');
+    const admins = await res.json();
+    const myId = JSON.parse(atob(localStorage.getItem('adminToken').split('.')[1])).id;
+
+    if (!admins.length) {
+      wrap.innerHTML = '<div class="empty-state"><i class="fa-solid fa-user-slash"></i><p>No admin users found.</p></div>';
+      return;
+    }
+
+    wrap.innerHTML = `
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Username</th>
+            <th>Created On</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${admins.map(a => `
+            <tr>
+              <td>${a.id}</td>
+              <td>
+                <span style="display:inline-flex;align-items:center;gap:8px;">
+                  <i class="fa-solid fa-user-shield" style="color:#c0922a;"></i>
+                  <strong>${a.username}</strong>
+                  ${a.id === myId ? '<span style="font-size:0.7rem;background:#e8f5e9;color:#2e7d32;padding:2px 8px;border-radius:99px;font-weight:600;">You</span>' : ''}
+                </span>
+              </td>
+              <td>${a.created_at ? new Date(a.created_at).toLocaleDateString('en-IN', {day:'numeric',month:'short',year:'numeric'}) : '—'}</td>
+              <td>
+                ${a.id !== myId ? `
+                  <button class="btn-danger" style="padding:6px 14px;font-size:0.8rem;" onclick="deleteAdmin(${a.id}, '${a.username}')">
+                    <i class="fa-solid fa-trash"></i> Remove
+                  </button>
+                ` : '<span style="color:#aaa;font-size:0.82rem;">Cannot remove yourself</span>'}
+              </td>
+            </tr>
+          `).join('')}
+        </tbody>
+      </table>
+    `;
+  } catch (e) {
+    wrap.innerHTML = `<div class="empty-state"><i class="fa-solid fa-triangle-exclamation"></i><p>Failed to load admins.</p></div>`;
+  }
+}
+
+async function deleteAdmin(id, username) {
+  if (!confirm(`Remove admin "${username}"? They will no longer be able to log in.`)) return;
+  try {
+    const res = await api('DELETE', `/api/auth/admins/${id}`);
+    const data = await res.json();
+    if (!res.ok) { toast('❌ ' + (data.error || 'Failed to remove admin.'), 'error'); return; }
+    toast(`✅ Admin "${username}" removed successfully.`, 'success');
+    loadAdmins();
+  } catch (e) {
+    toast('❌ Network error. Please try again.', 'error');
+  }
+}
+
+// Wire up Add Admin button
+document.getElementById('addAdminBtn').addEventListener('click', () => {
+  document.getElementById('addAdminForm').style.display = 'block';
+  document.getElementById('newAdminUsername').focus();
+});
+
+document.getElementById('cancelAddAdminBtn').addEventListener('click', () => {
+  document.getElementById('addAdminForm').style.display = 'none';
+  document.getElementById('newAdminUsername').value = '';
+  document.getElementById('newAdminPassword').value = '';
+});
+
+document.getElementById('saveAdminBtn').addEventListener('click', async () => {
+  const username = document.getElementById('newAdminUsername').value.trim();
+  const password = document.getElementById('newAdminPassword').value;
+  if (!username || !password) { toast('❌ Please fill in both username and password.', 'error'); return; }
+
+  const btn = document.getElementById('saveAdminBtn');
+  btn.disabled = true;
+  btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Creating...';
+
+  try {
+    const res = await api('POST', '/api/auth/admins', { username, password });
+    const data = await res.json();
+    if (!res.ok) {
+      toast('❌ ' + (data.error || 'Failed to create admin.'), 'error');
+    } else {
+      toast(`✅ Admin "${username}" created! They can now log in.`, 'success');
+      document.getElementById('addAdminForm').style.display = 'none';
+      document.getElementById('newAdminUsername').value = '';
+      document.getElementById('newAdminPassword').value = '';
+      loadAdmins();
+    }
+  } catch (e) {
+    toast('❌ Network error. Please try again.', 'error');
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = '<i class="fa-solid fa-floppy-disk"></i> Create Admin';
+  }
+});
+
+// Load admins when section is clicked
+document.getElementById('nav-admins').addEventListener('click', loadAdmins);

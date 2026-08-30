@@ -54,4 +54,59 @@ router.post('/change-password', verifyToken, async (req, res) => {
   }
 });
 
+// GET /api/auth/admins — list all admin users (protected)
+router.get('/admins', verifyToken, async (req, res) => {
+  try {
+    const admins = await db.all('SELECT id, username, created_at FROM admin_users ORDER BY id ASC');
+    res.json(admins);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// POST /api/auth/admins — create a new admin user (protected)
+router.post('/admins', verifyToken, async (req, res) => {
+  try {
+    const { username, password } = req.body;
+    if (!username || !password)
+      return res.status(400).json({ error: 'Username and password are required.' });
+    if (password.length < 6)
+      return res.status(400).json({ error: 'Password must be at least 6 characters.' });
+    if (!/^[a-zA-Z0-9_]+$/.test(username))
+      return res.status(400).json({ error: 'Username can only contain letters, numbers, and underscores.' });
+
+    const existing = await db.get('SELECT id FROM admin_users WHERE username = ?', [username]);
+    if (existing)
+      return res.status(409).json({ error: 'Username already exists.' });
+
+    const hash = bcrypt.hashSync(password, 10);
+    const result = await db.run('INSERT INTO admin_users (username, password_hash) VALUES (?, ?)', [username, hash]);
+    res.json({ success: true, id: result.lastID, username });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// DELETE /api/auth/admins/:id — delete an admin user (protected, cannot delete self)
+router.delete('/admins/:id', verifyToken, async (req, res) => {
+  try {
+    const targetId = parseInt(req.params.id);
+    if (targetId === req.admin.id)
+      return res.status(400).json({ error: 'You cannot delete your own account.' });
+
+    const total = await db.get('SELECT COUNT(*) as cnt FROM admin_users');
+    if (Number(total.cnt) <= 1)
+      return res.status(400).json({ error: 'Cannot delete the last admin account.' });
+
+    const existing = await db.get('SELECT id FROM admin_users WHERE id = ?', [targetId]);
+    if (!existing)
+      return res.status(404).json({ error: 'Admin user not found.' });
+
+    await db.run('DELETE FROM admin_users WHERE id = ?', [targetId]);
+    res.json({ success: true, message: 'Admin user deleted.' });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 module.exports = router;
